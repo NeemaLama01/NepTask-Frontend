@@ -15,6 +15,7 @@ import Mytasks from "./mytasks";
 import Archive from "./archivetask";
 import TaskCard from "./taskcard";
 import IndividualTask from "./individualtask";
+import Chat from "./Chat";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,10 +27,11 @@ function App() {
     { path: "/create-task", element: <Task /> },
     { path: "/taskcard", element: <TaskCard /> },
     { path: "/task/:id", element: <IndividualTask /> },
-    { path: "/collab-task", element: <Task /> },
+    { path: "/collab-task", element: <Collab /> },
     { path: "/explore", element: <Explore /> },
     { path: "/my-tasks", element: <Mytasks /> },
     { path: "/archive", element: <Archive /> },
+    { path: "/chat", element: <Chat /> },
   ]);
 
   return (

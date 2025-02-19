@@ -22,7 +22,7 @@ const TaskCard = ({ props }) => {
   const [editedPriceRange, setEditedPriceRange] = useState(props.priceRange);
   const [editedStatus, setEditedStatus] = useState(props.status);
 
-  const field = ["Tech", "Art", "Business", "Healthcare", "Education", "Other"];
+  const field = ["Tech", "Errands", "PetCare", "Healthcare", "Education", "Other"];
   const task = ["task", "Prototype", "Early Development", "Beta", "Launched"];
 
   const statusColor = props.status == 1 ? "bg-green-500" : "bg-red-500";

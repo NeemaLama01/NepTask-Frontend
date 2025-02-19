@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 
-
 const Collab = () => {
   const location = useLocation();
   const navigate = useNavigate();
