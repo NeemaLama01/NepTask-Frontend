@@ -11,12 +11,12 @@ const task = () => {
     const [taskTitle, settaskTitle] = useState("");
     const [taskInfo, settaskInfo] = useState("");
     const [taskType, settaskType] = useState("");
-    const [taskStage, settaskStage] = useState("");
+    const [priceRange, setPriceRange] = useState("");
     const [requirement, setRequirement] = useState("");
     const [error, setError] = useState("");
 
     const field = ["Tech", "Errands", "Petcare", "Healthcare", "Education", "Other"];
-    const task = ["task", "Prototype", "Early Development", "Beta", "Launched"];
+    const price = ["NRs.500-1000", "NRs.1000-1500", "NRs.1500-2000", "NRs.2000-3000", "NRs.3000-4000"];
 
     const navigate = useNavigate();
 
@@ -33,30 +33,30 @@ const task = () => {
         });
     };
 
-    const handletask = (stage) => {
+    const handleTask = (range) => {
         setSelectedOptions1((prev) =>
-            prev.includes(stage) ? prev.filter((item) => item !== stage) : [...prev, stage]
+            prev.includes(range) ? prev.filter((item) => item !== range) : [...prev, range]
         );
 
-        settaskStage((prev) => {
+        setPriceRange((prev) => {
             const prevArray = prev ? prev.split(", ").filter(Boolean) : [];
-            return prevArray.includes(stage)
-                ? prevArray.filter((item) => item !== stage).join(", ")
-                : [...prevArray, stage].join(", ");
+            return prevArray.includes(range)
+                ? prevArray.filter((item) => item !== range).join(", ")
+                : [...prevArray, range].join(", ");
         });
     };
 
     const handleNext = () => {
-        if (!taskTitle.trim() || !taskInfo.trim() || !taskType || !taskStage || !requirement) {
+        if (!taskTitle.trim() || !taskInfo.trim() || !taskType || !priceRange || !requirement) {
             setError("Please fill in all required fields.");
             toast.error("Please fill in all required fields!", { position: "top-right" });
             return;
         }
 
-        toast.success("task created successfully!", { position: "top-right" });
+        toast.success("Task created successfully! 🎉", { position: "top-right" });
 
         navigate("/collab-task", {
-            state: { taskTitle, taskInfo, taskType, taskStage, requirement },
+            state: { taskTitle, taskInfo, taskType, priceRange, requirement },
         });
     };
 
@@ -149,8 +149,8 @@ const task = () => {
 
     <div className="w-full max-w-md">
       {/* Label */}
-      <label htmlFor="stage-type" className="block text-sm font-medium text-gray-700 mt-10">
-        Type of the stage
+      <label htmlFor="price-range" className="block text-sm font-medium text-gray-700 mt-10">
+        Price range
       </label>
 
       {/* Custom Dropdown Button */}
@@ -160,20 +160,20 @@ const task = () => {
     onClick={() => setIsOpen1(!isOpen1)}
     className="mt-1 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 text-left"
   >
-    {selectedOptions1.length > 0 ? selectedOptions1.join(", ") : "Select stage"}
+    {selectedOptions1.length > 0 ? selectedOptions1.join(", ") : "Select range"}
   </button>
 
   {isOpen1 && (
     <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg p-2">
-      {task.map((stage) => (
-        <label key={stage} className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+      {price.map((range) => (
+        <label key={range} className="flex items-center p-2 hover:bg-gray-100 cursor-pointer">
           <input
             type="checkbox"
-            checked={selectedOptions1.includes(stage)}
-            onChange={() => handletask(stage)}
+            checked={selectedOptions1.includes(range)}
+            onChange={() => handleTask(range)}
             className="mr-2"
           />
-          {stage}
+          {range}
         </label>
       ))}
     </div>
@@ -183,7 +183,7 @@ const task = () => {
     </div>
         <div>
 <label htmlFor="required-expertise" className="block text-sm font-medium text-gray-700 mt-10">
-  Required expertise
+  Required expertise(if any)
 </label>
 <select
       id="required-expertise"
@@ -193,8 +193,8 @@ const task = () => {
       onChange={(e) => setRequirement(e.target.value)}
     >
       <option value="">Select Expertise</option> {/* Add a default/placeholder option */}
-      <option value="UI/UX">UI/UX</option> {/* Add 'value' attributes */}
-      <option value="Fullstack dev">Fullstack dev</option>
+      <option value="Cooking & Meal Prep">Cooking & Meal Prep</option> {/* Add 'value' attributes */}
+      <option value="Minor Repairs">Minor Repairs</option>
       {/* More options as needed */}
     </select>
         </div>
@@ -209,7 +209,7 @@ const task = () => {
           <button
             type="button"
             onClick={handleNext}
-            className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Next
           </button>

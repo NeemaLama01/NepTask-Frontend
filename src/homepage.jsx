@@ -4,6 +4,7 @@ import JobCard from "./taskcard";
 import axios from "axios";
 import Sidebar from "./assets/sidebar";
 import Header from "./assets/header";
+import Task_Card from "./taskoverviewcard_2";
 
 const Homepage = () => {
   const [IdeaList, setIdeaList] = useState([]);
@@ -12,19 +13,25 @@ const Homepage = () => {
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
+    if (!userId) return; // Ensure userId exists before making a request
+
+    const endpoint =
+      role === "Task Poster" ? "/accepted-tasker" : "/accepted-tasks";
+
     axios
-      .get("http://localhost:3000/get-Active-Idea", {
-        params: role === "Task Poster" ? { userId } : {}, // Pass userId only if role is Task Poster
-      })
+      .get(`http://localhost:3000${endpoint}`, { params: { userId } })
       .then((response) => {
-        setIdeaList(response?.data);
+        setIdeaList(response?.data || []);
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [role, userId]); // Dependencies ensure it refetches if role/userId changes
 
-  const displayedIdeas = showAllIdeas ? IdeaList : IdeaList.slice(0, 2);
+  const filteredIdeas = IdeaList.filter((list) => list.acceptedStatus === 1);
+  const displayedIdeas = showAllIdeas
+    ? filteredIdeas
+    : filteredIdeas.slice(0, 2);
 
   return (
     <div className="flex h-screen w-screen bg-gray-50">
@@ -35,36 +42,22 @@ const Homepage = () => {
       <div className="flex-1 p-6 overflow-y-auto">
         <Header />
 
-        {/* Ideas Section */}
         <section className="mb-8">
           <div className="flex justify-between items-center mb-4">
-            {IdeaList.length > 2 && (
+            <h2 className="text-xl font-semibold text-black">Your Tasks</h2>
+            {filteredIdeas.length > 2 && (
               <button
                 onClick={() => setShowAllIdeas(!showAllIdeas)}
-                className="text-blue-700"
+                className="text-indigo-600"
               >
                 {showAllIdeas ? "Show less" : "View all"}
               </button>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-4">
             {displayedIdeas.map((list) => (
-              <JobCard props={list} key={list.id} />
+              <Task_Card props={list} key={list.id} />
             ))}
-          </div>
-        </section>
-
-        {/* Contract Section */}
-        <section className="mb-8">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-black">Your Tasks</h2>
-            <a href="#" className="text-blue-700">
-              View all
-            </a>
-          </div>
-          <div className="grid grid-cols-2 gap-6">
-            <ContractCard />
-            <ContractCard />
           </div>
         </section>
 
@@ -85,27 +78,6 @@ const Homepage = () => {
     </div>
   );
 };
-
-const ContractCard = () => (
-  <div className="p-4 bg-white rounded shadow border relative items-center">
-    {/* Image/Thumbnail */}
-    <img src="" alt="Contract Preview" className="w-12 h-12 rounded mr-4" />
-    {/* Text Content */}
-    <div>
-      <h4 className="font-medium text-gray-800 mb-1">
-        Repair Bike
-      </h4>
-      <p className="text-sm text-gray-500 mb-2">Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do ut labore et dolore magna aliqua. </p>
-      <div className="text-gray-500 text-sm">
-        <p>Price range: 500-1000</p>
-      </div>
-    </div>
-    {/* Dots Menu */}
-    <button className="absolute bottom-4 right-4 text-gray-400 hover:text-gray-600">
-      <DotsVerticalIcon className="h-2 w-2" />
-    </button>
-  </div>
-);
 
 const PalCard = ({ name, role }) => (
   <div className="flex items-center p-4 bg-white rounded shadow border">

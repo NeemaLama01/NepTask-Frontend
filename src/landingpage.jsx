@@ -24,7 +24,7 @@ const AuthButtons = () => {
       </button>
       <button
         onClick={handleSignupClick}
-        className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-purple-700"
+        className="px-4 py-2 bg-blue-700 text-white rounded-md hover:primary"
       >
         Sign Up
       </button>

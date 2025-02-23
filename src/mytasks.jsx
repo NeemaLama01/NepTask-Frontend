@@ -4,47 +4,77 @@ import { NavLink } from "react-router-dom"; // Import NavLink for navigation
 import { toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 import axios from "axios";
-import JobCard from "./taskcard";
+import TaskCard from "./taskcard";
 import Sidebar from "./assets/sidebar";
 import Header from "./assets/header";
+import TaskOverviewCard from "./taskoverviewcard";
 
 // Initialize Toastify
 // toast.configure();
 
 const Mytasks = () => {
-  const [IdeaList, setIdeaList] = useState([]);
+  const [TaskList, setTaskList] = useState([]);
+  const [acceptedList, setAcceptedList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const role = localStorage.getItem("userRole");
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    fetchIdeas(); // Initial data fetch
+    if (role === "Task Poster") {
+      fetchTasks();
+    } else if (role === "Tasker") {
+      fetchAcceptedTasks();
+    }
   }, []);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      fetchIdeas(searchQuery);
+      if (role === "Task Poster") {
+        fetchTasks(searchQuery);
+      } else if (role === "Tasker") {
+        fetchAcceptedTasks(searchQuery);
+      }
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
-  const fetchIdeas = async (query = "") => {
+  // Fetch Active Tasks for Task Poster
+  const fetchTasks = async (query = "") => {
     try {
       const url = query.trim()
-        ? `http://localhost:3000/get-Active-Idea?query=${query}`
-        : "http://localhost:3000/get-Active-Idea";
+        ? `http://localhost:3000/get-Active-Task?query=${query}`
+        : "http://localhost:3000/get-Active-Task";
 
       const response = await axios.get(url, {
-        params: role === "Task Poster" ? { userId } : {}, // Pass userId only if role is Task Poster
+        params: { userId },
       });
 
-      setIdeaList(response?.data);
+      setTaskList(response?.data || []);
     } catch (error) {
       console.error("Error fetching tasks:", error);
-      setIdeaList([]); // Clear list on error
+      setTaskList([]);
       toast.error("Failed to load tasks. Please try again.");
+    }
+  };
+
+  // Fetch Accepted Tasks for Tasker
+  const fetchAcceptedTasks = async (query = "") => {
+    try {
+      const url = query.trim()
+        ? `http://localhost:3000/get-pending-Task?query=${query}`
+        : "http://localhost:3000/get-pending-Task";
+
+      const response = await axios.get(url, {
+        params: { userId },
+      });
+
+      setAcceptedList(response?.data || []);
+    } catch (error) {
+      console.error("Error fetching accepted tasks:", error);
+      setAcceptedList([]);
+      toast.error("Failed to load accepted tasks. Please try again.");
     }
   };
 
@@ -70,42 +100,92 @@ const Mytasks = () => {
           </div>
         </div>
 
-        {/* Ideas Section with Navigation */}
+        {/* Navigation Tabs */}
         <section className="mt-5">
           <div className="flex items-center mb-4 border-b border-gray-400 pb-2">
-            <NavLink
-              to="/my-ideas"
-              className={({ isActive }) =>
-                `text-3xl font-semibold mx-4 pb-1 ${
-                  isActive
-                    ? "text-indigo-600 border-b-4 border-indigo-600"
-                    : "text-gray-500"
-                }`
-              }
-            >
-              Active Tasks
-            </NavLink>
-            <div className="h-8 w-[2px] bg-gray-400"></div>{" "}
-            {/* Vertical Line */}
-            <NavLink
-              to="/archive"
-              className={({ isActive }) =>
-                `text-3xl font-semibold mx-4 pb-1 ${
-                  isActive
-                    ? "text-indigo-600 border-b-4 border-indigo-600"
-                    : "text-gray-500"
-                }`
-              }
-            >
-              Archive Tasks
-            </NavLink>
+            {role === "Task Poster" ? (
+              <>
+                <NavLink
+                  to="/my-tasks"
+                  className={({ isActive }) =>
+                    `text-3xl font-semibold mx-4 pb-1 ${
+                      isActive
+                        ? "text-primary border-b-4 border-primary"
+                        : "text-gray-500"
+                    }`
+                  }
+                >
+                  Active Tasks
+                </NavLink>
+
+                <div className="h-8 w-[2px] bg-gray-400"></div>
+
+                <NavLink
+                  to="/archive"
+                  className={({ isActive }) =>
+                    `text-3xl font-semibold mx-4 pb-1 ${
+                      isActive
+                        ? "text-primary border-b-4 border-primary"
+                        : "text-gray-500"
+                    }`
+                  }
+                >
+                  Archive Tasks
+                </NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/my-tasks"
+                  className={({ isActive }) =>
+                    `text-3xl font-semibold mx-4 pb-1 ${
+                      isActive
+                        ? "text-primary border-b-4 border-primary"
+                        : "text-gray-500"
+                    }`
+                  }
+                >
+                  Applied Tasks
+                </NavLink>
+
+                <div className="h-8 w-[2px] bg-gray-400"></div>
+
+                <NavLink
+                  to="/accepted-tasks"
+                  className={({ isActive }) =>
+                    `text-3xl font-semibold mx-4 pb-1 ${
+                      isActive
+                        ? "text-yellow-600 border-b-4 border-yellow-600"
+                        : "text-gray-500"
+                    }`
+                  }
+                >
+                  Accepted Tasks
+                </NavLink>
+                <div className="h-8 w-[2px] bg-gray-400"></div>
+                <NavLink
+                  to="/rejected-tasks"
+                  className={({ isActive }) =>
+                    `text-3xl font-semibold mx-4 pb-1 ${
+                      isActive
+                        ? "text-yellow-600 border-b-4 border-yellow-600"
+                        : "text-gray-500"
+                    }`
+                  }
+                >
+                  Rejected Tasks
+                </NavLink>
+              </>
+            )}
           </div>
 
-          {/* Display Ideas */}
+          {/* Display Tasks */}
           <div className="grid grid-cols-3 gap-6">
-            {IdeaList.map((list) => (
-              <JobCard props={list} key={list.id} />
-            ))}
+            {role === "Task Poster"
+              ? TaskList.map((list) => <TaskCard props={list} key={list.id} />)
+              : acceptedList.map((list) => (
+                  <TaskOverviewCard props={list} key={list.id} />
+                ))}
           </div>
         </section>
       </div>

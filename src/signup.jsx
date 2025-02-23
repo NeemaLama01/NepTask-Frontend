@@ -49,6 +49,7 @@ const Signup = () => {
     }
   };
 
+
   
   return (
     <div className="flex h-screen w-screen">
@@ -164,14 +165,14 @@ const Signup = () => {
               />
         </div>
         {/* Create Account Button */}
-        <button className="w-full bg-black text-white py-2 rounded font-medium hover:bg-gray-800">
+        <button className="w-full bg-primary text-white py-2 rounded font-medium hover:bg-gray-800">
           Create account
         </button>
         </form>
         {/* Login Link */}
         <p className="text-center text-gray-500 mt-4">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-700 hover:underline">
+          <a href="/login" className="text-primary hover:underline">
             Login
           </a>
         </p>

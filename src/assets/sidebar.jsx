@@ -19,7 +19,7 @@ const Sidebar = () => {
     { name: "Dashboard", icon: <HomeIcon className="h-5 w-5 mr-2" />, path: "/home" },
     { name: "Explore", icon: <GlobeAltIcon className="h-5 w-5 mr-2" />, path: "/explore" },
     { name: "My Tasks", icon: <ClipboardListIcon className="h-5 w-5 mr-2" />, path: "/my-tasks" },
-    { name: "Messages", icon: <ChatIcon className="h-5 w-5 mr-2" />, path: "/messages" },
+    { name: "Messages", icon: <ChatIcon className="h-5 w-5 mr-2" />, path: "/chat" },
     { name: "Rating and Reviews", icon: <DocumentIcon className="h-5 w-5 mr-2" />, path: "/ratings" },
     { name: "Taskers", icon: <UserGroupIcon className="h-5 w-5 mr-2" />, path: "/taskers" },
   ];

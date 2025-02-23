@@ -100,16 +100,16 @@ const Login = () => {
           </div>
 
           {/* Login Button */}
-          <button className="w-full bg-black text-white py-2 rounded font-medium hover:bg-gray-800">
+          <button className="w-full bg-primary text-white py-2 rounded font-medium hover:bg-gray-800">
             Login
           </button>
         </form>
 
         <p className="text-center text-gray-500 mt-4">
-          <a href="/forgot-password" className="text-blue-700 hover:underline">
+          <a href="/forgot-password" className="text-primary hover:underline">
           Forgot Password?{" "}
           </a>
-          <a href="/signup" className="text-blue-700 hover:underline">
+          <a href="/signup" className="text-primary hover:underline">
           Signup{" "}
           </a>
         </p>

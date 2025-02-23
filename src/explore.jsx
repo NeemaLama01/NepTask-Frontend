@@ -6,36 +6,36 @@ import Sidebar from "./assets/sidebar";
 import Subheader from "./assets/subheader";
 
 const Explore = () => {
-  const [IdeaList, setIdeaList] = useState([]);
+  const [TaskList, setTaskList] = useState([]);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    fetchIdeas(); // Initial data fetch
+    fetchTasks(); // Initial data fetch
   }, []);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      fetchIdeas(searchQuery);
+      fetchTasks(searchQuery);
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
-  const fetchIdeas = (query = "") => {
+  const fetchTasks = (query = "") => {
     const url = query.trim()
-      ? `http://localhost:3000/get-All-Idea?query=${query}`
-      : "http://localhost:3000/get-All-Idea";
+      ? `http://localhost:3000/get-All-Task?query=${query}`
+      : "http://localhost:3000/get-All-Task";
 
     axios
       .get(url)
       .then((response) => {
-        setIdeaList(response?.data);
+        setTaskList(response?.data);
         setError("");
       })
       .catch((error) => {
         console.error("Error fetching task:", error);
-        setIdeaList([]); // Clear list on error
+        setTaskList([]); // Clear list on error
         setError("Failed to load tasks. Please try again.");
       });
   };
@@ -63,7 +63,7 @@ const Explore = () => {
           </div>
         </div>
 
-        {/* Ideas Section */}
+        {/* Task Section */}
         <section className="mt-5">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-3xl font-semibold text-black">Explore Tasks</h2>
@@ -72,7 +72,7 @@ const Explore = () => {
             </a>
           </div>
           <div className="grid grid-cols-3 gap-6">
-            {IdeaList.map((list) => (
+            {TaskList.map((list) => (
               <JobCard props={list} key={list.id} />
             ))}
           </div>

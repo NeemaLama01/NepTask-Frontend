@@ -33,8 +33,8 @@ const Header = () => {
     };
   }, []);
 
-  const handleIdeaClick = () => {
-    navigate("/create-idea");
+  const handleTaskClick = () => {
+    navigate("/create-Task");
   };
 
   return (
@@ -42,11 +42,11 @@ const Header = () => {
       {/* Greeting Text */}
       <h1 className="text-2xl font-semibold text-black">Good morning Ngima 👋</h1>
 
-      {/* Actions (New Idea Button, Notification, and Profile) */}
+      {/* Actions (New Task Button, Notification, and Profile) */}
       <div className="flex items-center space-x-6">
-        {/* New Idea Button - Conditionally rendered based on user role */}
-        {userRole === "Founder" && (
-          <button onClick={handleIdeaClick} className="bg-blue-700 text-white px-4 py-2 rounded">
+        {/* New Task Button - Conditionally rendered based on user role */}
+        {userRole === "Task Poster" && (
+          <button onClick={handleTaskClick} className="bg-primary text-white px-4 py-2 rounded">
             + New Task
           </button>
         )}
