@@ -19,7 +19,7 @@ import Chat from "./Chat";
 import AcceptedTasks from "./acceptedtasks";
 import Payment from "./payment";
 import Success from "./success";
-import Error from "./failure";
+import BiddingFormOverlay from "./biddingform";
 
 function App() {
   const router = createBrowserRouter([
@@ -39,7 +39,8 @@ function App() {
     { path: "/accepted-tasks", element: <AcceptedTasks /> },
     { path: "/payment", element: <Payment /> },
     { path: "/success", element: <Success /> },
-    { path: "/failure", element: <Error /> },
+    { path: "/bidding-form", element: <BiddingFormOverlay /> },
+   
   ]);
 
   return (

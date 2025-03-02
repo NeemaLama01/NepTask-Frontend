@@ -63,8 +63,8 @@ const Mytasks = () => {
   const fetchAcceptedTasks = async (query = "") => {
     try {
       const url = query.trim()
-        ? `http://localhost:3000/get-pending-Task?query=${query}`
-        : "http://localhost:3000/get-pending-Task";
+        ? `http://localhost:3000/pending-task?query=${query}`
+        : "http://localhost:3000/pending-task";
 
       const response = await axios.get(url, {
         params: { userId },

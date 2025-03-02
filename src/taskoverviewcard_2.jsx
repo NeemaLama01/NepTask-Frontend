@@ -57,7 +57,7 @@ const Task_Card = ({ props }) => {
                 {/* Show Edit button only if userRole is "Tasker" */}
                 {userRole === "Tasker" && (
                   <button
-                    className="mt-3 w-full bg-yellow-500 text-white font-semibold py-2 rounded-md hover:bg-yellow-600 transition"
+                    className="mt-3 w-full bg-yellow text-white font-semibold py-2 rounded-md hover:bg-yellow-600 transition"
                     onClick={() => setEditMode(true)}
                   >
                     Edit
@@ -95,14 +95,14 @@ const Task_Card = ({ props }) => {
                     {loading ? "Updating..." : "Save"}
                   </button>
                   <button
-                    className="flex-1 bg-gray-400 text-white font-semibold py-2 rounded-md hover:bg-gray-500 transition"
+                    className="flex-1 bg-gray text-white font-semibold py-2 rounded-md hover:bg-gray transition"
                     onClick={() => setEditMode(false)}
                   >
                     Cancel
                   </button>
                 </div>
 
-                {success && <p className="mt-2 text-green-600 text-sm">✅ Updated successfully!</p>}
+                {success && <p className="mt-2 text-green text-sm">✅ Updated successfully!</p>}
               </>
             )}
           </div>
