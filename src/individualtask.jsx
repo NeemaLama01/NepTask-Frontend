@@ -182,13 +182,13 @@ const IndividualTask = () => {
                 ) : ( // If no decision has been made
                   <>
                     <button
-                      className="bg-green-500 text-white px-4 py-1 rounded mr-2"
+                      className="bg-green text-white px-4 py-1 rounded mr-2"
                       onClick={() => handleAcceptReject(tasker.id, 1)}
                     >
                       Accept
                     </button>
                     <button
-                      className="bg-red-500 text-white px-4 py-1 rounded"
+                      className="bg-red text-white px-4 py-1 rounded"
                       onClick={() => setShowReasonInput({ ...showReasonInput, [tasker.id]: true })}
                     >
                       Reject
@@ -202,7 +202,7 @@ const IndividualTask = () => {
                           onChange={(e) => setRejectionReasons({ ...rejectionReasons, [tasker.id]: e.target.value })}
                         />
                         <button
-                          className="bg-blue-500 text-white px-4 py-1 rounded ml-2"
+                          className="bg-blue text-white px-4 py-1 rounded ml-2"
                           onClick={() => handleAcceptReject(tasker.id, 0)}
                         >
                           Submit Reason
@@ -221,7 +221,13 @@ const IndividualTask = () => {
 )}
       </div>
 
-      {showBiddingForm && <BiddingFormOverlay onClose={() => setShowBiddingForm(false)} onSubmit={handleBidSubmit} />}
+      {showBiddingForm && (
+  <BiddingFormOverlay
+    onClose={() => setShowBiddingForm(false)}
+    onSubmit={handleBidSubmit}
+    priceRange={taskInfo?.priceRange} // Pass the price range here
+  />
+)}
     </main>
   );
 };

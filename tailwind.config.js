@@ -9,7 +9,7 @@ export default {
     white:"#ffffff",
     green:'#7FBA00',
     red:'#FF0000',
-    yellow:'#FFFF00',
+    yellow:'#EF9C07',
     dgreen:'#008847',
   },
     extend: {},

@@ -30,8 +30,8 @@ const Rejectedtasks = () => {
   const fetchRejectedTasks = async (query = "") => {
     try {
       const url = query.trim()
-        ? `http://localhost:3000/get-accepted-Task?query=${query}`
-        : "http://localhost:3000/get-accepted-Task";
+        ? `http://localhost:3000/accepted-tasks?query=${query}`
+        : "http://localhost:3000/accepted-tasks";
 
       const response = await axios.get(url, {
         params: { userId },
@@ -128,4 +128,4 @@ const Rejectedtasks = () => {
   );
 };
 
-export default TaskOverviewCard;
+export default Rejectedtasks;

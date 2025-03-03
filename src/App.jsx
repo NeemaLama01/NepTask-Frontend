@@ -20,6 +20,7 @@ import AcceptedTasks from "./acceptedtasks";
 import Payment from "./payment";
 import Success from "./success";
 import BiddingFormOverlay from "./biddingform";
+import Rejectedtasks from "./rejectedtasks";
 
 function App() {
   const router = createBrowserRouter([
@@ -40,6 +41,7 @@ function App() {
     { path: "/payment", element: <Payment /> },
     { path: "/success", element: <Success /> },
     { path: "/bidding-form", element: <BiddingFormOverlay /> },
+    { path: "/rejected-tasks", element: <Rejectedtasks />}
    
   ]);
 
