@@ -18,9 +18,11 @@ import IndividualTask from "./individualtask";
 import Chat from "./Chat";
 import AcceptedTasks from "./acceptedtasks";
 import Payment from "./payment";
-import Success from "./success";
+import Success from "./escrow";
 import BiddingFormOverlay from "./biddingform";
 import Rejectedtasks from "./rejectedtasks";
+import ClientPage from "./clientpage";
+import PaymentPage from "./paymentpage";
 
 function App() {
   const router = createBrowserRouter([
@@ -41,7 +43,10 @@ function App() {
     { path: "/payment", element: <Payment /> },
     { path: "/success", element: <Success /> },
     { path: "/bidding-form", element: <BiddingFormOverlay /> },
-    { path: "/rejected-tasks", element: <Rejectedtasks />}
+    { path: "/rejected-tasks", element: <Rejectedtasks />},
+    { path: "/client", element: <ClientPage />},
+    { path: "/paymentpage", element: <PaymentPage />},
+
    
   ]);
 

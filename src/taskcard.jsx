@@ -102,7 +102,7 @@ const TaskCard = ({ props }) => {
         <span className="text-xs">{props.taskInfo}</span>
 
         <div className="mt-4 flex gap-4">
-          <p className="text-sm bg-secondary p-2 rounded text-purple-600">{props.priceRange}</p>
+          <p className="text-sm bg-secondary p-2 rounded text-primary">{props.priceRange}</p>
           <p className="text-sm text-white bg-green p-2 rounded">{props.taskType}</p>
         </div>
 

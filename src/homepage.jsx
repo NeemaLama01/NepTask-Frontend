@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { DotsVerticalIcon } from "@heroicons/react/outline";
-import JobCard from "./taskcard";
 import axios from "axios";
 import Sidebar from "./assets/sidebar";
 import Header from "./assets/header";
-import Task_Card from "./taskoverviewcard_2";
+import ClientCard1 from "./clientcard1";
+import TaskoverviewCard2 from "./taskoverviewcard_2";
 
 const Homepage = () => {
   const [TaskList, setTaskList] = useState([]);
@@ -56,7 +55,7 @@ const Homepage = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             {displayedTasks.map((list) => (
-              <Task_Card props={list} key={list.id} />
+              <TaskoverviewCard2 props={list} key={list.id} />
             ))}
           </div>
         </section>
@@ -64,14 +63,11 @@ const Homepage = () => {
         {/* Pals Section */}
         <section>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-black">Your taskers</h2>
-            <a href="#" className="text-blue-700">
-              View all
-            </a>
+            <h2 className="text-xl font-semibold text-black">Your connections</h2>
+            <a href="#" className="text-indigo-600">View all</a>
           </div>
           <div className="grid grid-cols-2 gap-6">
-            <PalCard name="Rabi Rai" role="Pet Keeping" />
-            <PalCard name="Susma shakya" role="Household chores" />
+<ClientCard1 />
           </div>
         </section>
       </div>
@@ -79,17 +75,5 @@ const Homepage = () => {
   );
 };
 
-const PalCard = ({ name, role }) => (
-  <div className="flex items-center p-4 bg-white rounded shadow border">
-    <div className="w-12 h-12 bg-gray-300 rounded-full mr-4"></div>
-    <div className="flex-1">
-      <h4 className="font-semibold text-gray-800">{name}</h4>
-      <p className="text-sm text-gray-500">{role}</p>
-    </div>
-    <button className="bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm">
-      Message
-    </button>
-  </div>
-);
 
 export default Homepage;

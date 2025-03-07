@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Task_Card = ({ props }) => {
+
+const TaskoverviewCard2 = ({ props }) => {
   const [comment, setComment] = useState(props.comment || "No comment available");
   const [completionPercent, setCompletionPercent] = useState(props.completionPercent || 0);
   const [loading, setLoading] = useState(false);
@@ -41,8 +42,8 @@ const Task_Card = ({ props }) => {
         <span className="text-xs">{props.taskInfo}</span>
 
         <div className="mt-4 flex gap-4">
-          <p className="text-sm bg-purple-200 p-2 rounded text-purple-600">{props.equity}</p>
-          <p className="text-sm text-green-600 bg-green-200 p-2 rounded">{props.taskType}</p>
+          <p className="text-sm bg-purple-200 p-2 rounded text-purple-700">{props.priceRange}</p>
+          <p className="text-sm text-white bg-green p-2 rounded">{props.taskType}</p>
         </div>
 
         {/* Show comment and completion details only if acceptedStatus === 1 */}
@@ -112,4 +113,4 @@ const Task_Card = ({ props }) => {
   );
 };
 
-export default Task_Card;
+export default TaskoverviewCard2;

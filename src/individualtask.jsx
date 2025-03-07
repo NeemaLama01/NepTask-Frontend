@@ -119,6 +119,43 @@ const IndividualTask = () => {
     }
   };
 
+  
+  const handlePayment = async (tasker) => {
+    const formData = {
+      total: tasker.offerPrice,  // Dynamically set the offer price
+      email: localStorage.getItem("userEmail"),
+      name: localStorage.getItem("userName"),
+      phone: "9800000000", // If needed, fetch dynamically
+      items: tasker.name,  // Tasker name as the purchased item
+    };
+  
+    try {
+      const response = await axios.post("http://localhost:3000/payment", formData);
+      const esewaData = response.data;
+  
+      // Redirect user to Esewa payment page with form data
+      const paymentUrl = `https://rc-epay.esewa.com.np/api/epay/main/v2/form`;
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = paymentUrl;
+  
+      Object.keys(esewaData).forEach((key) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = esewaData[key];
+        form.appendChild(input);
+      });
+  
+      document.body.appendChild(form);
+      form.submit();
+    } catch (error) {
+      console.error("Payment Error:", error);
+      alert("Failed to initiate payment.");
+    }
+  };
+  
+  
   return (
     <main className="bg-gray-200 pt-20 px-20 pb-20">
       <h1 className="text-4xl font-bold">Task Detail</h1>
@@ -168,53 +205,61 @@ const IndividualTask = () => {
           </tr>
         </thead>
         <tbody>
-          {appliedTaskers.map((tasker) => (
-            <tr key={tasker.id} className="hover:bg-gray-50 transition">
-              <td className="py-3 px-4 border-b">{tasker.name}</td>
-              <td className="py-3 px-4 border-b">Rs. {tasker.offerPrice}</td>
-              <td className="py-3 px-4 border-b">{tasker.comments}</td>
-              <td className="py-3 px-4 border-b">
-                {tasker.status === 1 ? "Accepted" : tasker.status === 0 ? "Rejected" : "Pending"}
-              </td>
-              <td className="py-3 px-4 border-b">
-                {tasker.status !== null ? ( // If a decision has been made
-                  <span className="text-gray-600">Decision Made</span>
-                ) : ( // If no decision has been made
-                  <>
-                    <button
-                      className="bg-green text-white px-4 py-1 rounded mr-2"
-                      onClick={() => handleAcceptReject(tasker.id, 1)}
-                    >
-                      Accept
-                    </button>
-                    <button
-                      className="bg-red text-white px-4 py-1 rounded"
-                      onClick={() => setShowReasonInput({ ...showReasonInput, [tasker.id]: true })}
-                    >
-                      Reject
-                    </button>
-                    {showReasonInput[tasker.id] && (
-                      <div className="mt-2">
-                        <input
-                          type="text"
-                          placeholder="Reason for rejection"
-                          className="border p-2 rounded"
-                          onChange={(e) => setRejectionReasons({ ...rejectionReasons, [tasker.id]: e.target.value })}
-                        />
-                        <button
-                          className="bg-blue text-white px-4 py-1 rounded ml-2"
-                          onClick={() => handleAcceptReject(tasker.id, 0)}
-                        >
-                          Submit Reason
-                        </button>
-                      </div>
-                    )}
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {appliedTaskers.map((tasker) => (
+    <tr key={tasker.id} className="hover:bg-gray-50 transition">
+      <td className="py-3 px-4 border-b">{tasker.name}</td>
+      <td className="py-3 px-4 border-b">Rs. {tasker.offerPrice}</td>
+      <td className="py-3 px-4 border-b">{tasker.comments}</td>
+      <td className="py-3 px-4 border-b">
+        {tasker.status === 1 ? "Accepted" : tasker.status === 0 ? "Rejected" : "Pending"}
+      </td>
+      <td className="py-3 px-4 border-b">
+        {tasker.status === 1 ? ( // Show Pay Now if Accepted
+          <button
+            className="bg-green text-white px-4 py-1 rounded"
+            onClick={() => handlePayment(tasker)}
+          >
+            Pay Now
+          </button>
+        ) : tasker.status !== null ? ( // If decision is made
+          <span className="text-gray-600">Decision Made</span>
+        ) : ( // If no decision has been made
+          <>
+            <button
+              className="bg-green text-white px-4 py-1 rounded mr-2"
+              onClick={() => handleAcceptReject(tasker.id, 1)}
+            >
+              Accept
+            </button>
+            <button
+              className="bg-red text-white px-4 py-1 rounded"
+              onClick={() => setShowReasonInput({ ...showReasonInput, [tasker.id]: true })}
+            >
+              Reject
+            </button>
+            {showReasonInput[tasker.id] && (
+              <div className="mt-2">
+                <input
+                  type="text"
+                  placeholder="Reason for rejection"
+                  className="border p-2 rounded"
+                  onChange={(e) => setRejectionReasons({ ...rejectionReasons, [tasker.id]: e.target.value })}
+                />
+                <button
+                  className="bg-blue text-white px-4 py-1 rounded ml-2"
+                  onClick={() => handleAcceptReject(tasker.id, 0)}
+                >
+                  Submit Reason
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
+
       </table>
     ) : <p>No taskers have applied yet.</p>}
   </div>

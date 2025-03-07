@@ -6,7 +6,7 @@ import {
   ChatIcon,
   DocumentIcon,
   UserGroupIcon,
-  SupportIcon,
+  CashIcon,
 } from "@heroicons/react/outline";
 import { PowerOffIcon } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -19,9 +19,10 @@ const Sidebar = () => {
     { name: "Dashboard", icon: <HomeIcon className="h-5 w-5 mr-2" />, path: "/home" },
     { name: "Explore", icon: <GlobeAltIcon className="h-5 w-5 mr-2" />, path: "/explore" },
     { name: "My Tasks", icon: <ClipboardListIcon className="h-5 w-5 mr-2" />, path: "/my-tasks" },
+    { name: "Payments", icon: <CashIcon className="h-5 w-5 mr-2" />, path: "/paymentpage" },
     { name: "Messages", icon: <ChatIcon className="h-5 w-5 mr-2" />, path: "/chat" },
-    { name: "Rating and Reviews", icon: <DocumentIcon className="h-5 w-5 mr-2" />, path: "/ratings" },
-    { name: "Taskers", icon: <UserGroupIcon className="h-5 w-5 mr-2" />, path: "/taskers" },
+    { name: "Taskers", icon: <UserGroupIcon className="h-5 w-5 mr-2" />, path: "/client" },
+    { name: "Rating and Reviews", icon: <DocumentIcon className="h-5 w-5 mr-2" />, path: "/ratings" }
   ];
 
   // Function to handle logout
