@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Signup from "./signup";
 import Homepage from "./homepage";
-import Login from "./Login";
+import Login from "./login";
 import LandingPage from "./landingpage";
 import Auth from "./auth";
 import Task from "./task";
