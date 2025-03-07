@@ -27,6 +27,7 @@ const Login = () => {
         localStorage.setItem("userEmail", userData.email);
         localStorage.setItem("userName", userData.username);
         localStorage.setItem("userRole", userData.role);
+        localStorage.setItem("profileImage", userData.profile_image);
 
         toast.success("Login successful! 🎉", { autoClose: 2000 });
         setTimeout(() => navigate("/authentication"), 1500);
@@ -46,8 +47,7 @@ const Login = () => {
       <div className="w-1/2 bg-white flex flex-col justify-center px-20">
         <h1 className="text-4xl font-bold mb-4">Welcome Back</h1>
         <p className="text-gray-600 mb-8">
-          Good to see you again! Let's continue with
-          NepTask.
+          Good to see you again! Let's continue with NepTask.
         </p>
 
         {/* Google Signup Button */}
@@ -107,10 +107,10 @@ const Login = () => {
 
         <p className="text-center text-gray-500 mt-4">
           <a href="/forgot-password" className="text-primary hover:underline">
-          Forgot Password?{" "}
+            Forgot Password?{" "}
           </a>
           <a href="/signup" className="text-primary hover:underline">
-          Signup{" "}
+            Signup{" "}
           </a>
         </p>
       </div>

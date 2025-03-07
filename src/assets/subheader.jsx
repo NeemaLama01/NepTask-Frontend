@@ -1,10 +1,21 @@
-import {
-    BellIcon,
+import { BellIcon } from "@heroicons/react/outline";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
-  } from "@heroicons/react/outline";
-  
 const Subheader = () => {
+
+  const userId = localStorage.getItem("userId"); // Ensure userId is available
+  const [profileImage, setProfileImage] = useState("");
+
+  useEffect(() => {
+    // Set Profile Image from Local Storage
+    const storedImage = localStorage.getItem("profileImage");
+    if (storedImage) {
+      setProfileImage(`http://localhost:3000${storedImage}`);
+    }
+  }, []);
     return (
+
       <header className="flex items-center justify-end mb-6">
         <button className="relative mr-5">
           <BellIcon className="h-6 w-6 hover:text-gray-700" />
@@ -17,4 +28,8 @@ const Subheader = () => {
     );
   };
 
+
+
+
+  
   export default Subheader;
