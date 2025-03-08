@@ -1,5 +1,7 @@
 import { PhoneIcon, FolderAddIcon } from "@heroicons/react/outline";
 import { IoIosSend } from "react-icons/io";
+import Sidebar from "./assets/sidebar";
+import Subheader from "./assets/subheader";
 const Chat = () => {
   const contacts = [
     { name: "Rabi", status: "Available", img: "/profile.jpg" },
@@ -12,7 +14,9 @@ const Chat = () => {
 
   return (
     <div className="w-screen flex">
-      {/* Sidebar */}
+       
+      <Sidebar />
+     
       <div className="w-[254px] h-screen bg-secondary p-4">
         {/* Profile Section */}
         <div className="flex items-center my-2">
@@ -57,7 +61,7 @@ const Chat = () => {
       </div>
 
       {/* Main Chat Section */}
-      <div className="w-[50%] h-screen bg-white flex-col flex items-center">
+      <div className="w-[75%] h-screen bg-white flex-col flex items-center">
         <div className="w-[75%] bg-secondary h-[82px] mt-14 rounded-full flex items-center px-14">
           <div className=" cursor-pointer w-12 h-12 rounded-full overflow-hidden border-2 border-gray-500">
             <img
