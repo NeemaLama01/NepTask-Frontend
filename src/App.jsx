@@ -23,6 +23,7 @@ import BiddingFormOverlay from "./biddingform";
 import Rejectedtasks from "./rejectedtasks";
 import ClientPage from "./clientpage";
 import PaymentPage from "./paymentpage";
+import ReviewForm from "./rating";
 
 function App() {
   const router = createBrowserRouter([
@@ -46,7 +47,7 @@ function App() {
     { path: "/rejected-tasks", element: <Rejectedtasks />},
     { path: "/client", element: <ClientPage />},
     { path: "/paymentpage", element: <PaymentPage />},
-
+    { path: "/review", element: <ReviewForm />},
    
   ]);
 
