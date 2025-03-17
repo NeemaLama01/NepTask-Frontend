@@ -2,14 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const Payment = () => {
-  const [formData, setFormData] = useState({
-    total: "1000",
-    email: "user@example.com",
-    name: "John Doe",
-    phone: "9800000000",
-    items: ["Product1", "Product2"]
-  });
-
   const handlePayment = async () => {
     try {
       const response = await axios.post("http://localhost:3000/payment", formData);

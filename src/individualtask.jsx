@@ -126,7 +126,7 @@ const IndividualTask = () => {
       email: localStorage.getItem("userEmail"),
       name: localStorage.getItem("userName"),
       phone: "9800000000", // If needed, fetch dynamically
-      items: tasker.name,  // Tasker name as the purchased item
+      tasker: tasker.name,  // Tasker name as the purchased item
     };
   
     try {

@@ -4,27 +4,55 @@ import Subheader from "./assets/subheader";
 import Sidebar from "./assets/sidebar";
 
 const PaymentPage = () => {
-  // State to store fetched payments
   const [payments, setPayments] = useState([]);
+  const [paymentInfo, setPaymentInfo] = useState({}); // Store additional info for each payment
 
-  // Fetch payment data when component mounts
+  // Fetch all payments on mount
   useEffect(() => {
     axios
-      .get("http://localhost:3000/getPayments") // Make GET request to fetch payments
+      .get("http://localhost:3000/getPayments")
       .then((response) => {
-        setPayments(response.data); // Store the fetched payments in state
+        setPayments(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching payments:", error); // Handle error if any
+        console.error("Error fetching payments:", error);
       });
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
+  }, []);
+
+  // Fetch additional info for each payment after payments are loaded
+  useEffect(() => {
+    const fetchPaymentDetails = async () => {
+      const paymentData = {};
+
+      // Fetch details for each payment.task
+      await Promise.all(
+        payments.map(async (payment) => {
+          try {
+            const response = await axios.get("http://localhost:3000/getinfo", {
+              params: { task: payment.task },
+            });
+            paymentData[payment.task] = response.data.data;  // Store data in an object
+
+          } catch (error) {
+            console.error(`Error fetching info for ${payment.task}:`, error);
+          }
+        })
+      );
+
+      setPaymentInfo(paymentData); // Update state with all details
+    };
+
+    if (payments.length > 0) {
+      fetchPaymentDetails();
+    }
+  }, [payments]); // Runs when `payments` change
 
   return (
     <div className="flex h-screen w-screen bg-gray-50">
       <Sidebar />
-      <div className="flex-1 p-6 overflow-y-auto ">
-        <div className="flex justify-between ">
-          <h1 className="text-2xl font-semi-bold text-black mb-10 ">
+      <div className="flex-1 p-6 overflow-y-auto">
+        <div className="flex justify-between">
+          <h1 className="text-2xl font-semi-bold text-black mb-10">
             Your Payments
           </h1>
           <Subheader />
@@ -44,23 +72,24 @@ const PaymentPage = () => {
               payments.map((payment, index) => (
                 <tr key={index} className="border-t hover:bg-gray-100">
                   <td className="py-3 px-4">{payment.task}</td>
-                  <td className="py-3 px-4">Test Tasker</td>
-                  <td className="py-3 px-4">Test Amount</td>
+                  <td className="py-3 px-4">{paymentInfo[payment.task]?.tasker}</td>
+                  <td className="py-3 px-4">{paymentInfo[payment.task]?.offerPrice}</td>
                   <td className="py-3 px-4">{payment.status}</td>
+
                   <td className="py-3 px-4">
                     {payment.status === "Pending" ? (
                       <button className="px-3 py-1 bg-green text-white rounded-md">
                         Pay Now
                       </button>
                     ) : (
-                      <span className="text-gray">Completed</span>
+                      <span className="text-gray-500">Completed</span>
                     )}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="text-center py-3">
+                <td colSpan="6" className="text-center py-3">
                   No payments found
                 </td>
               </tr>
