@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ClientCard1 = () => {
   const [friends, setFriends] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getFriends(); // Fetch friends when component mounts
@@ -34,46 +36,42 @@ const ClientCard1 = () => {
     }
   };
 
-  // Define handleSendToFriend function
-  const handleSendToFriend = (email) => {
-    console.log(`Sending agreement to: ${email}`);
-    // Add your sending logic here
+  // Pass the selected friend to the chat page
+  const handleOpenChat = (friend) => {
+    navigate("/chat", { state: { user: friend } }); 
   };
 
   return (
-        <div className="space-y-2 bg-white">
-          {Array.isArray(friends) && friends.length > 0 ? (
-            friends.map((friend) => (
-              <div
-                key={friend.userId}
-                className="flex justify-between items-center p-2 border border-gray-200 rounded-lg"
-              >
-                <div className="flex items-center">
-                  <img
-                    src={`http://localhost:3000${friend.profile_image}`}
-                    alt="Friend Profile"
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                  <div className="flex flex-col">
-                  <span className="mt-1 mx-4">{friend.username}</span>
-                  <span className="mt-1 mx-4">{friend.email}</span>
-                  </div>
-
-                </div>
-                <button
-                  onClick={() => handleSendToFriend(friend.email)}
-                  className="bg-blue-700 text-white px-4 py-1 rounded-lg"
-                >
-                  Message
-                </button>
+    <div className="space-y-2 bg-white">
+      {friends.length > 0 ? (
+        friends.map((friend) => (
+          <div
+            key={friend.userId}
+            className="flex justify-between items-center p-2 border border-gray-200 rounded-lg"
+          >
+            <div className="flex items-center">
+              <img
+                src={`http://localhost:3000${friend.profile_image}`}
+                alt="Friend Profile"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <div className="flex flex-col">
+                <span className="mt-1 mx-4">{friend.username}</span>
+                <span className="mt-1 mx-4">{friend.email}</span>
               </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500">No connections found.</p>
-          )}
-        </div>
-
-
+            </div>
+            <button
+              onClick={() => handleOpenChat(friend)} 
+              className="bg-blue-700 text-white px-4 py-1 rounded-lg"
+            >
+              Message
+            </button>
+          </div>
+        ))
+      ) : (
+        <p className="text-center text-gray-500">No connections found.</p>
+      )}
+    </div>
   );
 };
 

@@ -15,7 +15,7 @@ import Mytasks from "./mytasks";
 import Archive from "./archivetask";
 import TaskCard from "./taskcard";
 import IndividualTask from "./individualtask";
-import Chat from "./Chat";
+import Messages from "./messages";
 import AcceptedTasks from "./acceptedtasks";
 import Payment from "./payment";
 import Success from "./escrow";
@@ -39,16 +39,15 @@ function App() {
     { path: "/explore", element: <Explore /> },
     { path: "/my-tasks", element: <Mytasks /> },
     { path: "/archive", element: <Archive /> },
-    { path: "/chat", element: <Chat /> },
+    { path: "/chat", element: <Messages /> },
     { path: "/accepted-tasks", element: <AcceptedTasks /> },
     { path: "/payment", element: <Payment /> },
     { path: "/success", element: <Success /> },
     { path: "/bidding-form", element: <BiddingFormOverlay /> },
-    { path: "/rejected-tasks", element: <Rejectedtasks />},
-    { path: "/client", element: <ClientPage />},
-    { path: "/paymentpage", element: <PaymentPage />},
-    { path: "/review", element: <ReviewForm />},
-   
+    { path: "/rejected-tasks", element: <Rejectedtasks /> },
+    { path: "/client", element: <ClientPage /> },
+    { path: "/paymentpage", element: <PaymentPage /> },
+    { path: "/review", element: <ReviewForm /> },
   ]);
 
   return (
