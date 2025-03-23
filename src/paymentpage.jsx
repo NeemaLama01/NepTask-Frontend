@@ -19,12 +19,12 @@ const PaymentPage = () => {
     const fetchInitialPayments = async () => {
       try {
         const apiUrl =
-          userRole === "taskposter"
+          userRole === "Task Poster"
             ? "http://localhost:3000/getPayments" // API for taskposter
             : "http://localhost:3000/taskerpayment"; // API for tasker
 
         const params =
-          userRole === "taskposter"
+          userRole === "Task Poster"
             ? { taskposter: userName }
             : { tasker: userId };
 
@@ -50,12 +50,12 @@ const PaymentPage = () => {
           payments.map(async (payment) => {
             try {
               const apiUrl =
-                userRole === "taskposter"
+                userRole === "Task Poster"
                   ? "http://localhost:3000/getinfo"
                   : "http://localhost:3000/taskerpayment";
 
               const params =
-                userRole === "taskposter"
+                userRole === "Task Poster"
                   ? { task: payment.task, taskposter: userName }
                   : { tasker: userId };
 
@@ -119,7 +119,11 @@ const PaymentPage = () => {
             <thead>
               <tr className="text-left text-white bg-primary">
                 <th className="py-2 px-4">Task Title</th>
-                <th className="py-2 px-4">Tasker</th>
+                {userRole === "Task Poster" ? (
+                  <th className="py-2 px-4">Tasker</th>
+                ) : (
+                  <th className="py-2 px-4">Task Poster</th>
+                )}
                 <th className="py-2 px-4">Amount</th>
                 <th className="py-2 px-4">Status</th>
                 <th className="py-2 px-4">Actions</th>
@@ -129,8 +133,16 @@ const PaymentPage = () => {
               {payments.map((payment, index) => (
                 <tr key={index} className="border-t hover:bg-gray-100">
                   <td className="py-3 px-4">{payment.task}</td>
-                  <td className="py-3 px-4">{paymentInfo[payment.task]?.tasker || "N/A"}</td>
-                  <td className="py-3 px-4">Rs.{paymentInfo[payment.task]?.offerPrice || "N/A"}</td>
+                  <td className="py-3 px-4">
+                    {userRole === "Task Poster"
+                      ? paymentInfo[payment.task]?.tasker || "N/A"
+                      : payment.taskposter || "N/A"}
+                  </td>
+                  <td className="py-3 px-4">
+                    {userRole === "Task Poster"
+                      ? paymentInfo[payment.task]?.offerPrice || "N/A"
+                      : payment.offerprice || "N/A"}
+                  </td>
                   <td className="py-3 px-4">{payment.status}</td>
                   <td className="py-3 px-4">
                     {payment.status === "Pending" ? (
@@ -149,8 +161,18 @@ const PaymentPage = () => {
             </tbody>
           </table>
         ) : (
-          <div className="flex items-center justify-center h-64">
-            <p className="text-xl font-semibold text-red-500">No payments found / 404</p>
+          <div className="flex flex-col items-center justify-center h-64 text-center">
+            <img src="/ezgif-2ea53893d930c2.webp" className="w-36 h-36" />
+            <h2 className="text-2xl font-semibold text-gray-700">No Payments💸Found.</h2>
+            <p className="text-gray-500 mt-2">
+              You currently have no pending or completed payments.
+            </p>
+            <button
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              onClick={() => window.location.href = "/my-tasks"}
+            >
+              Browse Available Tasks
+            </button>
           </div>
         )}
       </div>
