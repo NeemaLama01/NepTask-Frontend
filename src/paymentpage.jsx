@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Subheader from "./assets/subheader";
 import Sidebar from "./assets/sidebar";
+import { FaCheckCircle } from "react-icons/fa";
 
 const PaymentPage = () => {
   const [payments, setPayments] = useState([]);
@@ -126,7 +127,8 @@ const PaymentPage = () => {
                 )}
                 <th className="py-2 px-4">Amount</th>
                 <th className="py-2 px-4">Status</th>
-                <th className="py-2 px-4">Actions</th>
+                {userRole === "Task Poster" && <th className="py-2 px-4">Actions</th>}
+
               </tr>
             </thead>
             <tbody>
@@ -143,7 +145,15 @@ const PaymentPage = () => {
                       ? paymentInfo[payment.task]?.offerPrice || "N/A"
                       : payment.offerprice || "N/A"}
                   </td>
-                  <td className="py-3 px-4">{payment.status}</td>
+                  <td className="py-3 px-4">
+                    {userRole === "Task Poster"
+                      ? payment.status
+                      : payment.status === "Paid"
+                      ? "Received "
+                      : payment.status(
+                      )}
+                  </td>
+                  {userRole === "Task Poster" && (
                   <td className="py-3 px-4">
                     {payment.status === "Pending" ? (
                       <button
@@ -156,6 +166,7 @@ const PaymentPage = () => {
                       <span className="text-gray-500">Completed</span>
                     )}
                   </td>
+                  )}
                 </tr>
               ))}
             </tbody>
