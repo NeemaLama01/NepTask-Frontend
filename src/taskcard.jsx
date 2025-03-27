@@ -88,6 +88,18 @@ const TaskCard = ({ props }) => {
   return (
     <div className="mx-auto w-full bg-white shadow-md rounded-lg overflow-hidden hover:rounded-xl hover:shadow-slate-300 transition-all">
       <div className="px-4 py-6">
+                {/* Task Image */}
+                {props.image ? (
+          <img
+            src={`http://localhost:3000${props.image}`}
+            alt="Task Image"
+            className="w-full h-48 object-cover rounded-md mb-4"
+          />
+        ) : (
+          <div className="w-full h-48 bg-gray-200 flex items-center justify-center rounded-md mb-4">
+            <p className="text-gray-500">No image found</p>
+          </div>
+        )}
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-800">{props.taskTitle}</h2>
           {props.status != 1 && (

@@ -24,8 +24,10 @@ const Collab = () => {
       await axios.post("http://localhost:3000/create-task", {
         userId,
         ...formData,
-        status: true,
-      });
+        status: 1,
+      },{ headers: {
+        "Content-Type": "multipart/form-data",
+      },});
       
       toast.success("Project activated successfully!");
       navigate("/my-tasks");
@@ -44,7 +46,7 @@ const Collab = () => {
       await axios.post("http://localhost:3000/create-task", {
         userId,
         ...formData,
-        status: false,
+        status: 0,
       });
       
       toast.success("Task archived successfully.");

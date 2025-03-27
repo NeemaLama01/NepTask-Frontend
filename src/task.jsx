@@ -13,6 +13,8 @@ const task = () => {
     const [taskType, settaskType] = useState("");
     const [priceRange, setPriceRange] = useState("");
     const [requirement, setRequirement] = useState("");
+    const [image, setImage] = useState(null);
+
     const [error, setError] = useState("");
 
     const field = ["Tech", "Errands", "Petcare", "Healthcare", "Education", "Other"];
@@ -20,6 +22,14 @@ const task = () => {
 
     const navigate = useNavigate();
 
+    const handleImageChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        setImage(file); // Store the actual file
+      }
+    };
+    
+  
     const handleField = (field) => {
         setSelectedOptions((prev) =>
             prev.includes(field) ? prev.filter((item) => item !== field) : [...prev, field]
@@ -56,12 +66,12 @@ const task = () => {
         toast.success("Task created successfully! 🎉", { position: "top-right" });
 
         navigate("/collab-task", {
-            state: { taskTitle, taskInfo, taskType, priceRange, requirement },
+            state: { taskTitle, taskInfo, taskType, priceRange,image, requirement },
         });
     };
 
     return (
-        <div className="flex bg-white  h-screen mt-20 rounded-lg shadow-md p-8">
+        <div className="flex bg-white h-screen mt-20 rounded-lg shadow-md p-8">
 
 <div className="bg-white border-r border-gray-200 flex flex-col p-6">
   {/* Main Sidebar Items */}
@@ -182,6 +192,21 @@ const task = () => {
 
     </div>
         <div>
+
+        <div>
+  <label htmlFor="related-images" className="block text-sm font-medium text-gray-700 mt-10">
+    Add related Images
+  </label>
+  <input
+  type="file"
+  id="related-images"
+  accept="image/*"
+  onChange={handleImageChange}
+    className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100"
+  />
+  
+</div>
+
 <label htmlFor="required-expertise" className="block text-sm font-medium text-gray-700 mt-10">
   Required expertise(if any)
 </label>
