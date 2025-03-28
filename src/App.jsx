@@ -24,6 +24,7 @@ import Rejectedtasks from "./rejectedtasks";
 import ClientPage from "./clientpage";
 import PaymentPage from "./paymentpage";
 import ReviewForm from "./rating";
+import ForgetPassword from "./forgotpassword";
 
 function App() {
   const router = createBrowserRouter([
@@ -48,6 +49,7 @@ function App() {
     { path: "/client", element: <ClientPage /> },
     { path: "/paymentpage", element: <PaymentPage /> },
     { path: "/review", element: <ReviewForm /> },
+    { path: "/forgot-password", element: <ForgetPassword /> },
   ]);
 
   return (
