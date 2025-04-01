@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import ReviewForm from "./rating"; // Assuming this is the review and rating form
 
 const TaskoverviewCard2 = ({ props }) => {
-  const [comment, setComment] = useState(props.comment || "No comment available");
-  const [completionPercent, setCompletionPercent] = useState(props.completionPercent || 0);
+  const [comment, setComment] = useState(props.user_comment || "No comment available");
+  const [completionPercent, setCompletionPercent] = useState(props.completion_percent || 0);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  
+  const [showReviewPopup, setShowReviewPopup] = useState(false); // State for controlling the popup visibility
+
   const userRole = localStorage.getItem("userRole"); // Get user role from localStorage
 
   const handleSave = async () => {
@@ -38,7 +39,7 @@ const TaskoverviewCard2 = ({ props }) => {
   return (
     <div className="mx-auto w-full bg-white shadow-md rounded-lg overflow-hidden hover:rounded-xl hover:shadow-slate-300 transition-all">
       <div className="px-4 py-6">
-      {props.image ? (
+        {props.image ? (
           <img
             src={`http://localhost:3000${props.image}`}
             alt="Task Image"
@@ -63,16 +64,26 @@ const TaskoverviewCard2 = ({ props }) => {
             {!editMode ? (
               <>
                 {/* Display Mode */}
-                <p className="text-sm text-gray-700"><strong>Comment:</strong> {comment}</p>
-                <p className="text-sm text-gray-700"><strong>Completion:</strong> {completionPercent}%</p>
+                <p className="text-sm text-gray-700"><strong>Comment:</strong> {userRole === "Tasker" ? props.user_comment : props.comment}</p>
+                <p className="text-sm text-gray-700"><strong>Completion:</strong> {userRole === "Tasker" ? props.completion_percent :props.completion}%</p>
 
-                {/* Show Edit button only if userRole is "Tasker" */}
-                {userRole === "Tasker" && (
+                {/* Show Edit button only if userRole is "Tasker" and completion is not 100% */}
+                {userRole === "Tasker" && completionPercent !== 100 && (
                   <button
                     className="mt-3 w-full bg-yellow text-white font-semibold py-2 rounded-md hover:bg-yellow-600 transition"
                     onClick={() => setEditMode(true)}
                   >
                     Edit
+                  </button>
+                )}
+
+                {/* Show Review and Rating popup if completionPercent is 100% */}
+                {completionPercent === 100 && !showReviewPopup && (
+                  <button
+                    className="mt-3 w-full bg-primary text-white font-semibold py-2 rounded-md hover:bg-blue-600 transition"
+                    onClick={() => setShowReviewPopup(true)}
+                  >
+                    Rate Now
                   </button>
                 )}
               </>
@@ -120,6 +131,24 @@ const TaskoverviewCard2 = ({ props }) => {
           </div>
         )}
       </div>
+
+      {/* Conditionally render the Review and Rating popup */}
+      {showReviewPopup && (
+        <>
+          {/* Overlay background */}
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50" onClick={() => setShowReviewPopup(false)}></div>
+
+          {/* Review Form as Popup */}
+          <div className="fixed inset-0 flex justify-center items-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+              <ReviewForm
+                taskId={props.id}
+                onClose={() => setShowReviewPopup(false)} // Close the popup on close
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

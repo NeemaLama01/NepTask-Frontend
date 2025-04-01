@@ -54,6 +54,7 @@ const Homepage = () => {
             )}
           </div>
           <div className="grid grid-cols-2 gap-4">
+            {console.log(displayedTasks)}
             {displayedTasks.map((list) => (
               <TaskoverviewCard2 props={list} key={list.id} />
             ))}
