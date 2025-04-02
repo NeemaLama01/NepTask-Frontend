@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReviewCard from "./ReviewCard";
 
 const ClientCard = ({ props }) => {
-  const [isRequestSent, setIsRequestSent] = useState(false); // Track request status
+  const [isRequestSent, setIsRequestSent] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [showReview, setShowReview] = useState(false);
+  const [isLoadingReviews, setIsLoadingReviews] = useState(false);
 
   useEffect(() => {
     const checkFriendRequestStatus = async () => {
       try {
-        const userId = localStorage.getItem("userId"); // Get logged-in userId
+        const userId = localStorage.getItem("userId");
         if (!userId) return;
 
         const response = await axios.get(`http://localhost:3000/checkFriendStatus`, {
@@ -24,7 +28,7 @@ const ClientCard = ({ props }) => {
       }
     };
     checkFriendRequestStatus();
-  }, [props.userId]); // Runs when the component mounts or userId changes
+  }, [props.userId]);
 
   const handleAddFriend = async () => {
     try {
@@ -41,8 +45,8 @@ const ClientCard = ({ props }) => {
       }
 
       const response = await axios.post("http://localhost:3000/friendReq", {
-        userId, // Logged-in user's ID
-        friendId: props.userId, // Target user's ID
+        userId,
+        friendId: props.userId,
       });
 
       if (response.status === 200) {
@@ -54,6 +58,31 @@ const ClientCard = ({ props }) => {
       toast.error("Request already sent. Please wait");
     }
   };
+  const toggleReviews = async () => {
+    if (showReview) {
+      setShowReview(false);
+      return;
+    }
+  
+    try {
+      setIsLoadingReviews(true);
+      const response = await axios.get(`http://localhost:3000/get-reviews`, {
+        params: { userId: props.userId },
+      });
+  
+      setReviews(response.data);
+ 
+      setShowReview(true); // Ensure reviews are shown after fetching
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    } finally {
+      setIsLoadingReviews(false);
+    }
+    
+  };
+  
+
+  
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 w-full hover:shadow-lg transition-all">
@@ -63,12 +92,16 @@ const ClientCard = ({ props }) => {
             src={`http://localhost:3000${props.profile_image}`}
             alt="Profile"
             className="w-20 h-20 rounded-full object-cover"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "https://via.placeholder.com/80";
+            }}
           />
         </div>
 
         <button
-          className={` bg-primary text-white text-sm px-4 py-2 rounded-md transition ${
-            isRequestSent ? "cursor-not-allowed" : " hover:bg-gray"
+          className={`bg-primary text-white text-sm px-4 py-2 rounded-md transition ${
+            isRequestSent ? "cursor-not-allowed opacity-70" : "hover:bg-gray"
           }`}
           onClick={handleAddFriend}
           disabled={isRequestSent}
@@ -76,18 +109,47 @@ const ClientCard = ({ props }) => {
           {isRequestSent ? "Following" : "Follow"}
         </button>
       </div>
-<div className="flex justify-between">     
-     <div className="mt-3 text-left">
-        <h2 className="text-lg font-semibold text-gray-900">@{props.username}</h2>
-        <p className="text-sm text-gray-500">{props.role}</p>
-        <p className="text-sm text-gray-400">{props.email}</p>
+
+      <div className="flex justify-between">
+        <div className="mt-3 text-left">
+          <h2 className="text-lg font-semibold text-gray-900">@{props.username}</h2>
+          <p className="text-sm text-gray-500">{props.role}</p>
+          <p className="text-sm text-gray-400">{props.email}</p>
+        </div>
+        <button className="mt-10 h-10 item-center bg-primary text-white text-sm px-4 py-1 rounded-md transition">
+          Message
+        </button>
       </div>
-        <button className="mt-10 h-10 item-center bg-primary text-white text-sm px-4 py-1 rounded-md transition ">Message</button>
-     </div>
 
+      {/* Toggle View Ratings */}
+      <p
+        className="pt-4 text-sm text-gray-500 underline hover:cursor-pointer"
+        onClick={toggleReviews}
+      >
+        {showReview ? "Hide Ratings" : "View Ratings"}
+        {isLoadingReviews && " (Loading...)"}
+      </p>
 
+      {/* Show ReviewCard when showReview is true */}
+      {showReview && (
+        <div className="mt-4">
+          {console.log(Array.isArray(reviews))}
+          {reviews.reviews.length > 0 ? (
+            reviews.reviews.map((review) => (
+              <ReviewCard 
+                key={review.id} 
+                review={review} 
+              />
+              
+            ))
+          ) : (
+            !isLoadingReviews && <p className="text-gray-500">No reviews available</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
+
 
 export default ClientCard;
