@@ -25,6 +25,8 @@ import ClientPage from "./clientpage";
 import PaymentPage from "./paymentpage";
 import ReviewForm from "./rating";
 import ForgetPassword from "./forgotpassword";
+import AdminHomepage from "./adminhomepage";
+
 
 function App() {
   const router = createBrowserRouter([
@@ -50,6 +52,7 @@ function App() {
     { path: "/paymentpage", element: <PaymentPage /> },
     { path: "/review", element: <ReviewForm /> },
     { path: "/forgot-password", element: <ForgetPassword /> },
+    { path: "/admin-homepage", element: <AdminHomepage /> },
   ]);
 
   return (

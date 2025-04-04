@@ -30,9 +30,16 @@ const Login = () => {
         localStorage.setItem("profileImage", userData.profile_image);
 
         toast.success("Login successful! 🎉", { autoClose: 2000 });
-        setTimeout(() => navigate("/authentication"), 1500);
+        setTimeout(() => {
+          if (userData.role === "admin") {
+            navigate("/admin-homepage"); // Redirect to admin homepage
+          } else {
+            navigate("/authentication"); // Redirect to general authentication page
+          }
+        }, 1500); // Delay the navigation for the success toast
       }
-    } catch (error) {
+    }
+     catch (error) {
       if (error.response?.status === 401) {
         toast.error("Invalid email or password. Please try again.");
       } else {
