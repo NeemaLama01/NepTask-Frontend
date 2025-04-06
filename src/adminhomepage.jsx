@@ -24,10 +24,10 @@ ChartJS.register(
 );
 
 const AdminHomepage = () => {
-  const [TaskList, setTaskList] = useState([]);
   const [users, setUserData] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [payment, setPayment] = useState([]);
   const role = localStorage.getItem("userRole");
   const userId = localStorage.getItem("userId");
 
@@ -45,13 +45,10 @@ const AdminHomepage = () => {
         );
         setTasks(tasksResponse.data);
 
-        const taskListResponse = await axios.get(
-          `http://localhost:3000${
-            role === "Task Poster" ? "/accepted-tasker" : "/accepted-tasks"
-          }`,
-          { params: { userId } }
+        const paymentResponse = await axios.get(
+          "http://localhost:3000/adminPayment"
         );
-        setTaskList(taskListResponse?.data || []);
+        setPayment(paymentResponse.data);
 
         const usersResponse = await axios.get(
           "http://localhost:3000/getUsers",
@@ -86,7 +83,10 @@ const AdminHomepage = () => {
     labels: ["Paid", "Pending"],
     datasets: [
       {
-        data: [70, 30],
+        data: [
+          payment.filter((payment) => payment.status === "Paid").length, // Count Paid
+          payment.filter((payment) => payment.status === "Pending").length,
+        ], // Count Pending
         backgroundColor: ["#4CAF50", "#FFC107"],
         hoverOffset: 4,
       },
@@ -177,10 +177,33 @@ const AdminHomepage = () => {
             </div>
             <div className="flex justify-around mt-2 text-sm text-gray-600">
               <div>
-                <span className="block font-bold">70%</span>Paid
+                <span className="block font-bold">
+                  {payment.length > 0
+                    ? (
+                        (payment.filter((payment) => payment.status === "Paid")
+                          .length /
+                          payment.length) *
+                        100
+                      ).toFixed(2)
+                    : 0}
+                  %
+                </span>
+                Paid
               </div>
               <div>
-                <span className="block font-bold">30%</span>Pending
+                <span className="block font-bold">
+                  {payment.length > 0
+                    ? (
+                        (payment.filter(
+                          (payment) => payment.status === "Pending"
+                        ).length /
+                          payment.length) *
+                        100
+                      ).toFixed(2)
+                    : 0}
+                  %
+                </span>
+                Pending
               </div>
             </div>
           </div>
@@ -203,28 +226,38 @@ const AdminHomepage = () => {
           </div>
         </div>
 
-         {/* Payment Table*/}
+        {console.log(payment)}
+        {/* Payment Table*/}
         <table className="w-full border-collapse bg-white shadow-lg rounded-lg mt-7 ">
           <thead>
-            <tr className="text-left text-white bg-primary">
+            <tr className="text-center text-white bg-primary">
               <th className="py-2 px-4 ">Task Title</th>
               <th className="py-2 px-4">Task Poster</th>
               <th className="py-2 px-4">Tasker</th>
-              <th className="py-2 px-4">Amount</th>
-              <th className="py-2 px-4">Status</th> 
+              <th className="py-2 px-4">Transaction Amount</th>
+              <th className="py-2 px-4">NepTask Commission</th>
+              <th className="py-2 px-4">Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr className="border-t hover:bg-gray-100">
-              <td className="py-3 px-4">Cleaning</td>
-              <td className="py-3 px-4">Rabi</td>
-              <td className="py-3 px-4">Ngima</td>
-              <td className="py-3 px-4">2000</td>
-              <td className="py-3 px-4">Received</td>
-            </tr>
+            {payment.map((item, index) => (
+              <tr
+                key={index}
+                className="text-center border-t hover:bg-gray-100"
+              >
+                <td className="py-3 px-4">{item.task}</td>
+                <td className="py-3 px-4">{item.taskposter || "N/A"}</td>
+                <td className="py-3 px-4">{item.tasker || "N/A"}</td>
+                <td className="py-3 px-4">NRs.{item.offerPrice || "N/A"}</td>
+                <td className="py-3 px-4">
+                  {" "}
+                  NRs.{item.offerPrice ? item.offerPrice * 0.1 : "N/A"}
+                </td>
+                <td className="py-3 px-4">{item.status || "Pending"}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
-
       </div>
     </div>
   );
