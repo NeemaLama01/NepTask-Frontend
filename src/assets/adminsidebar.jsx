@@ -15,7 +15,7 @@ const AdminSidebar = () => {
   const sidebarItems = [
     { name: "Dashboard", icon: <HomeIcon className="h-5 w-5 mr-2" />, path: "/home" },
     { name: "Explore", icon: <GlobeAltIcon className="h-5 w-5 mr-2" />, path: "/explore" },
-    { name: "Task Management System", icon: <ClipboardListIcon className="h-5 w-5 mr-2" />, path: "/my-tasks" },
+    { name: "Task Management System", icon: <ClipboardListIcon className="h-5 w-5 mr-2" />, path: "/admin-tms" },
     { name: "User Management System", icon: <UserGroupIcon className="h-5 w-5 mr-2" />, path: "/client" },
   ];
 

@@ -28,6 +28,7 @@ const AdminHomepage = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [payment, setPayment] = useState([]);
+  const [admintask,setAdmintask] = useState([]);
   const role = localStorage.getItem("userRole");
   const userId = localStorage.getItem("userId");
 
@@ -49,6 +50,11 @@ const AdminHomepage = () => {
           "http://localhost:3000/adminPayment"
         );
         setPayment(paymentResponse.data);
+       
+        const adminResponse = await axios.get(
+          "http://localhost:3000/admintask"
+        );
+        setAdmintask(adminResponse.data);     
 
         const usersResponse = await axios.get(
           "http://localhost:3000/getUsers",
@@ -98,13 +104,13 @@ const AdminHomepage = () => {
     datasets: [
       {
         label: "Active",
-        data: [35],
+        data: [admintask.filter((activetask) => activetask.status === "1").length],// Count Paid
         backgroundColor: "#4CAF50",
         barThickness: 40,
       },
       {
         label: "Archived",
-        data: [10],
+        data: [admintask.filter((archivetask) => archivetask.status === "0").length],
         backgroundColor: "#F44336",
         barThickness: 40,
       },
@@ -226,7 +232,7 @@ const AdminHomepage = () => {
           </div>
         </div>
 
-        {console.log(payment)}
+       
         {/* Payment Table*/}
         <table className="w-full border-collapse bg-white shadow-lg rounded-lg mt-7 ">
           <thead>

@@ -26,6 +26,7 @@ import PaymentPage from "./paymentpage";
 import ReviewForm from "./rating";
 import ForgetPassword from "./forgotpassword";
 import AdminHomepage from "./adminhomepage";
+import AdminTms from "./admintms";
 
 
 function App() {
@@ -53,6 +54,8 @@ function App() {
     { path: "/review", element: <ReviewForm /> },
     { path: "/forgot-password", element: <ForgetPassword /> },
     { path: "/admin-homepage", element: <AdminHomepage /> },
+    { path: "/admin-tms", element: <AdminTms /> },
+    // { path: "/admin-ums", element: <AdminUms /> },
   ]);
 
   return (
