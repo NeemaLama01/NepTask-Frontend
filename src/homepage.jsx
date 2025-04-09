@@ -64,17 +64,20 @@ const Homepage = () => {
         {/* Pals Section */}
         <section>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-black">Your connections</h2>
-            <a href="#" className="text-indigo-600">View all</a>
+            <h2 className="text-xl font-semibold text-black">
+              Your connections
+            </h2>
+            <a href="#" className="text-indigo-600">
+              View all
+            </a>
           </div>
           <div className="grid grid-cols-2 gap-6">
-<ClientCard1 />
+            <ClientCard1 />
           </div>
         </section>
       </div>
     </div>
   );
 };
-
 
 export default Homepage;

@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReviewCard from "./ReviewCard";
+import { useNavigate } from "react-router-dom";
 
 const ClientCard = ({ props }) => {
   const [isRequestSent, setIsRequestSent] = useState(false);
@@ -10,15 +11,20 @@ const ClientCard = ({ props }) => {
   const [showReview, setShowReview] = useState(false);
   const [isLoadingReviews, setIsLoadingReviews] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const checkFriendRequestStatus = async () => {
       try {
         const userId = localStorage.getItem("userId");
         if (!userId) return;
 
-        const response = await axios.get(`http://localhost:3000/checkFriendStatus`, {
-          params: { userId, friendId: props.userId },
-        });
+        const response = await axios.get(
+          `http://localhost:3000/checkFriendStatus`,
+          {
+            params: { userId, friendId: props.userId },
+          }
+        );
 
         if (response.data.isRequestSent) {
           setIsRequestSent(true);
@@ -63,26 +69,26 @@ const ClientCard = ({ props }) => {
       setShowReview(false);
       return;
     }
-  
+
     try {
       setIsLoadingReviews(true);
       const response = await axios.get(`http://localhost:3000/get-reviews`, {
         params: { userId: props.userId },
       });
-  
+
       setReviews(response.data);
- 
+
       setShowReview(true); // Ensure reviews are shown after fetching
     } catch (error) {
       console.error("Error fetching reviews:", error);
     } finally {
       setIsLoadingReviews(false);
     }
-    
   };
-  
 
-  
+  const handleOpenChat = (friend) => {
+    navigate("/chat", { state: { user: friend } });
+  };
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4 w-full hover:shadow-lg transition-all">
@@ -110,13 +116,18 @@ const ClientCard = ({ props }) => {
         </button>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <div className="mt-3 text-left">
-          <h2 className="text-lg font-semibold text-gray-900">@{props.username}</h2>
+          <h2 className="text-lg font-semibold text-gray-900">
+            @{props.username}
+          </h2>
           <p className="text-sm text-gray-500">{props.role}</p>
           <p className="text-sm text-gray-400">{props.email}</p>
         </div>
-        <button className="mt-10 h-10 item-center bg-primary text-white text-sm px-4 py-1 rounded-md transition">
+        <button
+          onClick={() => handleOpenChat(props)}
+          className="bg-primary text-white text-sm px-4 py-2 rounded-md transition hover:bg-blue-500"
+        >
           Message
         </button>
       </div>
@@ -134,22 +145,17 @@ const ClientCard = ({ props }) => {
       {showReview && (
         <div className="mt-4">
           {console.log(Array.isArray(reviews))}
-          {reviews.reviews.length > 0 ? (
-            reviews.reviews.map((review) => (
-              <ReviewCard 
-                key={review.id} 
-                review={review} 
-              />
-              
-            ))
-          ) : (
-            !isLoadingReviews && <p className="text-gray-500">No reviews available</p>
-          )}
+          {reviews.reviews.length > 0
+            ? reviews.reviews.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))
+            : !isLoadingReviews && (
+                <p className="text-gray-500">No reviews available</p>
+              )}
         </div>
       )}
     </div>
   );
 };
-
 
 export default ClientCard;

@@ -27,6 +27,8 @@ import ReviewForm from "./rating";
 import ForgetPassword from "./forgotpassword";
 import AdminHomepage from "./adminhomepage";
 import AdminTms from "./admintms";
+import AdminExplore from "./adminexplore";
+import AdminRejectedtasks from "./adminreject";
 
 
 function App() {
@@ -55,6 +57,8 @@ function App() {
     { path: "/forgot-password", element: <ForgetPassword /> },
     { path: "/admin-homepage", element: <AdminHomepage /> },
     { path: "/admin-tms", element: <AdminTms /> },
+    { path: "/admin-explore", element: <AdminExplore /> },
+    { path: "/rejectedTasks", element: <AdminRejectedtasks /> },
     // { path: "/admin-ums", element: <AdminUms /> },
   ]);
 

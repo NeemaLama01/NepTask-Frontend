@@ -132,6 +132,20 @@ const Mytasks = () => {
                 >
                   Archive Tasks
                 </NavLink>
+      
+                <div className="h-8 w-[2px] bg-gray-400"></div>
+                <NavLink
+                  to="/rejectedTasks"
+                  className={({ isActive }) =>
+                    `text-3xl font-semibold mx-4 pb-1 ${
+                      isActive
+                        ? "text-yellow-600 border-b-4 border-yellow-600"
+                        : "text-gray-500"
+                    }`
+                  }
+                >
+                  Rejected Tasks
+                </NavLink>
               </>
             ) : (
               <>

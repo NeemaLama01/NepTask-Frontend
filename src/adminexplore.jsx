@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import axios from "axios";
 import TaskCard from "./taskcard";
-import Sidebar from "./assets/sidebar";
 import Subheader from "./assets/subheader";
+import AdminSidebar from "./assets/adminsidebar";
 
-const Explore = () => {
+const AdminExplore = () => {
   const [TaskList, setTaskList] = useState([]);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,7 +42,7 @@ const Explore = () => {
 
   return (
     <div className="flex h-screen w-screen bg-gray-50">
-      <Sidebar />
+      <AdminSidebar />
       <div className="flex-1 p-6 overflow-y-auto">
         <Subheader />
         {error && <p className="text-red-500">{error}</p>}
@@ -82,4 +82,4 @@ const Explore = () => {
   );
 };
 
-export default Explore;
+export default AdminExplore;

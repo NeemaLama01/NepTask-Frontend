@@ -1,55 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
-import axios from "axios";
+import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TaskCard from "./taskcard";
+import axios from "axios";
 import Sidebar from "./assets/sidebar";
-import { NavLink } from "react-router-dom";
-import Subheader from "./assets/subheader";
+import Header from "./assets/header";
+import TaskOverviewCard from "./taskoverviewcard";
 
-const Archive = () => {
-  const [TaskList, setTaskList] = useState([]);
+const AdminRejectedtasks = () => {
+  const [rejectedList, setRejectedList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const role = localStorage.getItem("userRole");
-  const userId = localStorage.getItem("userId") || ""; // Ensure userId is a string
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    fetchTasks(); // Initial data fetch
+    fetchRejectedTasks();
   }, []);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      fetchTasks(searchQuery);
+      fetchRejectedTasks(searchQuery);
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
-  const fetchTasks = async (query = "") => {
+  // Fetch Accepted Tasks for Task Poster
+  const fetchRejectedTasks = async (query = "") => {
     try {
-      const url = query
-        ? `http://localhost:3000/get-Archive-Task?query=${query}`
-        : "http://localhost:3000/get-Archive-Task";
+      const url = "http://localhost:3000/admin_rejection";
 
-      const response = await axios.get(url, {
-        params: role === "Task Poster" && userId ? { userId } : undefined,
-      });
+      const response = await axios.get(url);
 
-      setTaskList(response?.data);
+      setRejectedList(response?.data || []);
     } catch (error) {
-      toast.error("No Tasks found");
-      console.error("Error fetching Tasks:", error);
-      setTaskList([]); // Clear list on error
+      console.error("Error fetching accepted tasks:", error);
+      setRejectedList([]);
+      toast.error("Failed to load accepted tasks. Please try again.");
     }
+  
   };
 
   return (
     <div className="flex h-screen w-screen bg-gray-50">
       <Sidebar />
       <div className="flex-1 p-6 overflow-y-auto">
-        <Subheader />
+        <Header />
 
         {/* Search Bar */}
         <div className="max-w-md bg-white rounded-lg overflow-hidden shadow-lg">
@@ -57,7 +54,7 @@ const Archive = () => {
             <input
               type="text"
               className="w-full py-4 px-6 focus:outline-none"
-              placeholder="Enter the Task title, Task type..."
+              placeholder="Enter the task title, task type..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -67,7 +64,7 @@ const Archive = () => {
           </div>
         </div>
 
-        {/* Tasks Section with Navigation */}
+        {/* Navigation Tabs */}
         <section className="mt-5">
           <div className="flex items-center mb-4 border-b border-gray-400 pb-2">
             <NavLink
@@ -82,8 +79,9 @@ const Archive = () => {
             >
               Active Tasks
             </NavLink>
-            <div className="h-8 w-[2px] bg-gray-400"></div>{" "}
-            {/* Vertical Line */}
+
+            <div className="h-8 w-[2px] bg-gray-400"></div>
+
             <NavLink
               to="/archive"
               className={({ isActive }) =>
@@ -96,8 +94,9 @@ const Archive = () => {
             >
               Archive Tasks
             </NavLink>
-            <div className="h-8 w-[2px] bg-gray-400"></div>{" "}
-            {/* Vertical Line */}
+
+            <div className="h-8 w-[2px] bg-gray-400"></div>
+
             <NavLink
               to="/rejectedTasks"
               className={({ isActive }) =>
@@ -105,18 +104,20 @@ const Archive = () => {
                   isActive
                     ? "text-indigo-600 border-b-4 border-indigo-600"
                     : "text-gray-500"
-                }`
+                }`  
               }
             >
               Rejected Tasks
             </NavLink>
           </div>
+
+          {/* Display RejectedTasks */}
           <div className="grid grid-cols-3 gap-6">
-            {TaskList.length > 0 ? (
-              TaskList.map((list) => <TaskCard props={list} key={list.id} />)
-            ) : (
-              <p className="text-gray-500 text-lg">No archived tasks found.</p>
-            )}
+            {rejectedList
+              .filter((list) => list.admin_approval == 2)
+              .map((list) => (
+                <TaskOverviewCard props={list} key={list.id} />
+              ))}
           </div>
         </section>
       </div>
@@ -124,4 +125,4 @@ const Archive = () => {
   );
 };
 
-export default Archive;
+export default AdminRejectedtasks;
