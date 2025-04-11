@@ -57,16 +57,6 @@ const Login = () => {
           Good to see you again! Let's continue with NepTask.
         </p>
 
-        {/* Google Signup Button */}
-        <button className="w-full flex items-center justify-center border border-gray-300 rounded py-2 mb-6 hover:bg-gray-50">
-          <img src="/google.png" alt="Google Icon" className="h-5 w-5 mr-2" />
-          <span className="text-gray-700 font-medium">Login with Google</span>
-        </button>
-
-        <div className="text-center text-gray-400 mb-6">
-          <span>or</span>
-        </div>
-
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {/* Email Input */}
           <div className="mb-4">

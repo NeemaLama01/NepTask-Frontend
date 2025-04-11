@@ -4,6 +4,8 @@ import axios from "axios";
 import Sidebar from "./assets/sidebar";
 import Message_card from "./messagecard";
 import Chat_area from "./chatarea";
+import Subheader from "./assets/subheader"; 
+import { AiOutlineMessage } from "react-icons/ai";
 
 const Messages = () => {
   const [chatList, setChatList] = useState([]);
@@ -15,7 +17,7 @@ const Messages = () => {
     const fetchChatList = async () => {
       try {
         const res = await axios.get(`http://localhost:3000/chat/${userId}`);
-        console.log("Chat List Response:", res.data); // Log the response
+        console.log("Chat List Response:", res.data);
         setChatList(res.data);
       } catch (err) {
         console.error("Error fetching chat rooms:", err);
@@ -32,16 +34,19 @@ const Messages = () => {
         receiverId: receiver.userId,
       });
 
-      // Fetch messages immediately after opening the chat
-      const messagesRes = await axios.get(`http://localhost:3000/messages/${res.data.roomId}`);
-
-      setSelectedChat({ ...receiver, roomId: res.data.roomId, messages: messagesRes.data });
+      const messagesRes = await axios.get(
+        `http://localhost:3000/messages/${res.data.roomId}`
+      );
+      setSelectedChat({
+        ...receiver,
+        roomId: res.data.roomId,
+        messages: messagesRes.data,
+      });
     } catch (err) {
       console.error("Error opening chat:", err);
     }
   };
 
-  // Automatically open chat if navigated from Pal_card.jsx
   useEffect(() => {
     if (location.state?.user) {
       openChat(location.state.user);
@@ -51,26 +56,45 @@ const Messages = () => {
   return (
     <div className="flex h-screen w-screen bg-gray-50">
       <Sidebar />
-      <div className="flex-1 flex">
-        {/* Chat List */}
-        <div className="w-1/3 bg-white p-4 border-r">
-          <h2 className="text-2xl font-semibold mb-4">Messages</h2>
-          {chatList.map((chat) => (
-            <Message_card
-              key={`${chat.roomId}-${chat.userId}`} // Unique key
-              props={chat}
-              onClick={() => openChat(chat)}
-            />
-          ))}
-        </div>
 
-        {/* Chat Area */}
-        <div className="w-2/3">
-          {selectedChat ? (
-            <Chat_area chatData={selectedChat} />
-          ) : (
-            <p className="text-center mt-10 text-gray-500">Select a conversation</p>
-          )}
+      <div className="flex-1 flex flex-col">
+        <div className="flex justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-primary p-6">Messages</h1>
+          </div>
+          <div className="p-4 bg-gray-50">
+            <Subheader />
+          </div>
+        </div>
+        {/* Subheader */}
+
+        {/* Main Chat Content */}
+        <div className="flex flex-1">
+          {/* Chat List */}
+          <div className="w-1/3 bg-white p-4 border-r overflow-y-auto">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+              Messages
+            </h2>
+            {chatList.map((chat) => (
+              <Message_card
+                key={`${chat.roomId}-${chat.userId}`}
+                props={chat}
+                onClick={() => openChat(chat)}
+              />
+            ))}
+          </div>
+
+          {/* Chat Area */}
+          <div className="w-2/3 p-4 bg-white">
+            {selectedChat ? (
+              <Chat_area chatData={selectedChat} />
+            ) : (
+              <div className="text-center mt-40 text-gray-500 text-lg flex flex-col items-center">
+                  <AiOutlineMessage className="text-6xl mb-4 text-gray-400" />
+                <p>Select a conversation</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

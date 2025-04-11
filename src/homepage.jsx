@@ -8,6 +8,8 @@ import TaskoverviewCard2 from "./taskoverviewcard_2";
 const Homepage = () => {
   const [TaskList, setTaskList] = useState([]);
   const [showAllTasks, setShowAllTasks] = useState(false);
+  const [showAllPals, setShowAllPals] = useState(false);
+  const [PalList, setPalList] = useState([]);
   const role = localStorage.getItem("userRole");
   const userId = localStorage.getItem("userId");
 
@@ -25,12 +27,24 @@ const Homepage = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+
+      axios
+      .get(`http://localhost:3000/getFriend`, { params: { userId } })
+      .then((response) => {
+        setPalList(response?.data || []);
+      })
+      .catch((error) => {
+        console.error("Error fetching pals:", error);
+      });
+
   }, [role, userId]); // Dependencies ensure it refetches if role/userId changes
 
   const filteredTasks = TaskList.filter((list) => list.acceptedStatus === 1);
   const displayedTasks = showAllTasks
     ? filteredTasks
     : filteredTasks.slice(0, 2);
+    const displayedPals = showAllPals ? PalList : PalList.slice(0, 2);
+
 
   return (
     <div className="flex h-screen w-screen bg-gray-50">
@@ -63,18 +77,23 @@ const Homepage = () => {
 
         {/* Pals Section */}
         <section>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-black">
-              Your connections
-            </h2>
-            <a href="#" className="text-indigo-600">
-              View all
-            </a>
-          </div>
-          <div className="grid grid-cols-2 gap-6">
-            <ClientCard1 />
-          </div>
-        </section>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-3xl font-bold text-gray-800">Your Pals</h2>
+              {PalList.length > 2 && (
+                <button
+                  onClick={() => setShowAllPals(!showAllPals)}
+                  className="text-indigo-600 hover:underline font-medium"
+                >
+                  {showAllPals ? "Show less" : "View all"}
+                </button>
+              )}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {displayedPals.map((pal, index) => (
+                <ClientCard1 key={pal.id || pal.userId || index} props={pal} />
+              ))}
+            </div>
+          </section>
       </div>
     </div>
   );

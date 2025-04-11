@@ -2,76 +2,35 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ClientCard1 = () => {
-  const [friends, setFriends] = useState([]);
+const ClientCard1 = ({props}) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getFriends(); // Fetch friends when component mounts
-  }, []);
-
-  const getFriends = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      if (!userId) {
-        console.error("No user ID found in localStorage.");
-        return;
-      }
-
-      const response = await axios.get("http://localhost:3000/getFriend", {
-        params: { userId },
-      });
-
-      console.log("API Response:", response.data);
-
-      if (Array.isArray(response.data)) {
-        setFriends(response.data);
-      } else {
-        console.error("Expected an array but got:", typeof response.data);
-        setFriends([]);
-      }
-    } catch (error) {
-      console.error("Error getting friends:", error);
-      setFriends([]);
-    }
-  };
 
   // Pass the selected friend to the chat page
   const handleOpenChat = (friend) => {
-    navigate("/chat", { state: { user: friend } }); 
+    navigate("/chat", { state: { user: props } }); 
   };
 
   return (
-    <div className="space-y-2 bg-white">
-      {friends.length > 0 ? (
-        friends.map((friend) => (
-          <div
-            key={friend.userId}
-            className="flex justify-between items-center p-2 border border-gray-200 rounded-lg"
-          >
-            <div className="flex items-center">
-              <img
-                src={`http://localhost:3000${friend.profile_image}`}
-                alt="Friend Profile"
-                className="w-10 h-10 rounded-full object-cover"
-              />
-              <div className="flex flex-col">
-                <span className="mt-1 mx-4">{friend.username}</span>
-                <span className="mt-1 mx-4">{friend.email}</span>
-              </div>
-            </div>
-            <button
-              onClick={() => handleOpenChat(friend)} 
-              className="bg-blue-700 text-white px-4 py-1 rounded-lg"
-            >
-              Message
-            </button>
-          </div>
-        ))
-      ) : (
-        <p className="text-center text-gray-500">No connections found.</p>
-      )}
+    <div className="p-4 bg-white rounded shadow border flex justify-between items-center text-center">
+    <div className="flex">
+      <img
+        src={`http://localhost:3000${props.profile_image}`}
+        alt="Friend Profile"
+        className="w-16 h-16 rounded-full object-cover mb-2"
+      />
+      <div className="flex flex-col mt-2 mx-4">
+        <h3 className="font-medium text-gray-800">@{props.username}</h3>
+        <h3 className="font-medium text-gray-400">{props.role}</h3>
+      </div>
     </div>
+
+    <button
+      onClick={handleOpenChat}
+      className="mt-2 bg-primary text-white px-4 py-1 rounded-lg"
+    >
+      Message
+    </button>
+  </div>
   );
 };
 

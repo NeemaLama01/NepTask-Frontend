@@ -73,7 +73,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center mb-6 relative">
+    <header className="flex justify-between items-center mb-6 relative ">
       {/* Greeting Text */}
       <h1 className="text-2xl font-semibold text-black">Good morning {localStorage.getItem("userName")} 👋</h1>
 
