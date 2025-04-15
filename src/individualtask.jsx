@@ -74,11 +74,13 @@ const IndividualTask = () => {
   // Handle submitting bid
   const handleBidSubmit = async (offerPrice, comments) => {
     const userId = localStorage.getItem("userId");
+    const userName= localStorage.getItem("userName")
     const applicationData = {
       taskId: taskInfo?.id,
       taskerId: userId,
       offerPrice: parseFloat(offerPrice),
       comments: comments.trim(),
+      tasker:userName,
     };
 
     try {
@@ -140,7 +142,7 @@ const IndividualTask = () => {
       email: localStorage.getItem("userEmail"),
       name: localStorage.getItem("userName"),
       phone: "9800000000", // If needed, fetch dynamically
-      tasker: tasker.name, // Tasker name as the purchased item
+      items: taskInfo.taskTitle, // Tasker name as the purchased item
     };
 
     try {

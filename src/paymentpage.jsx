@@ -62,7 +62,7 @@ const PaymentPage = () => {
                 userRole === "Task Poster"
                   ? { task: payment.task, taskposter: userName }
                   : { tasker: userId };
-
+console.log(payment)
               const response = await axios.get(apiUrl, { params });
               paymentData[payment.task] = response.data.data;
             } catch (error) {

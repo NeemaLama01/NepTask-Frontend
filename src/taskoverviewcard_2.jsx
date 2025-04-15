@@ -43,7 +43,7 @@ const TaskoverviewCard2 = ({ props }) => {
           <img
             src={`http://localhost:3000${props.image}`}
             alt="Task Image"
-            className="w-full h-48 object-cover rounded-md mb-4"
+            className="w-full h-48 object-fit rounded-md mb-4"
           />
         ) : (
           <div className="w-full h-48 bg-gray-200 flex items-center justify-center rounded-md mb-4">

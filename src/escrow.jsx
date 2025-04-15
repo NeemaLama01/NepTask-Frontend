@@ -23,6 +23,7 @@ const Escrow = () => {
         // Verify payment
         const paymentResponse = await axios.post("http://localhost:3000/verify-payment", {
           transaction_uuid: cleanTransactionUUID,
+          
         });
 
         if (paymentResponse.data.success) {
