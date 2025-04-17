@@ -29,7 +29,7 @@ import AdminHomepage from "./adminhomepage";
 import AdminTms from "./admintms";
 import AdminExplore from "./adminexplore";
 import AdminRejectedtasks from "./adminreject";
-
+import ProfilePage from "./profilepage";
 
 function App() {
   const router = createBrowserRouter([
@@ -59,6 +59,7 @@ function App() {
     { path: "/admin-tms", element: <AdminTms /> },
     { path: "/admin-explore", element: <AdminExplore /> },
     { path: "/rejectedTasks", element: <AdminRejectedtasks /> },
+    { path: "/profilepage", element: <ProfilePage /> },
     // { path: "/admin-ums", element: <AdminUms /> },
   ]);
 

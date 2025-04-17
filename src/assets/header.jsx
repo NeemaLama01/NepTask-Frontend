@@ -14,6 +14,7 @@ const Header = () => {
 
   const notificationRef = useRef(null);
   const profileRef = useRef(null);
+  const socketRef = useRef(null); // Store socket instance
 
   useEffect(() => {
     // Fetch notifications from localStorage or API
@@ -49,6 +50,9 @@ const Header = () => {
     navigate("/create-task");
   };
 
+  const handleUpdateRedirect = () => {
+    navigate("/profilepage");
+  };
   // Handle file upload
   const handleUploadClick = async (event) => {
     const file = event.target.files[0];
@@ -132,9 +136,12 @@ const Header = () => {
               <label htmlFor="uploadProfile" className="block text-sm text-gray-700 p-2 hover:bg-gray-100 cursor-pointer">
                 Upload Image
               </label>
-              <button className="w-full text-left text-sm text-gray-700 p-2 hover:bg-gray-100 rounded">
-                Update Profile
-              </button>
+              
+              {userRole !== "admin" && (
+                <button onClick={handleUpdateRedirect} className="w-full text-left text-sm text-gray-700 p-2 hover:bg-gray-100 rounded">
+                  Update Profile
+                </button>
+              )}
             </div>
           )}
         </div>

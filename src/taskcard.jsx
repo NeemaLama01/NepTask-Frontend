@@ -27,7 +27,7 @@ const TaskCard = ({ props }) => {
   const statusColor = props.status == 1 ? "bg-green" : "bg-red";
 
   const handleClick = () => {
-    navigate(`/task/${props.id}`);
+    navigate(`/task/${props.id}`); //individual task
   };
 
   const handleEditClick = () => {

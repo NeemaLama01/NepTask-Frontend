@@ -220,11 +220,15 @@ const IndividualTask = () => {
                   <strong>Price Range:</strong>{" "}
                   {taskInfo?.priceRange || "Not specified"}
                 </p>
+                <p className="mb-6">
+                  <strong>Posted by:</strong>{" "}
+                  {taskInfo?.name || "Not specified"}
+                </p>
 
                 {userRole === "Tasker" && (
                   <button
                     className={clsx(
-                      "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-indigo-700",
+                      "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md  text-white hover:bg-indigo-700 ",
                       dayjs(taskInfo?.submitBy).isBefore(new Date())
                         ? "bg-gray-500 cursor-not-allowed"
                         : "bg-primary"
@@ -237,21 +241,22 @@ const IndividualTask = () => {
                 )}
               </div>
             </div>
-
+   
             {userRole === "Tasker" && (
               <>
                 <h1 className="text-4xl font-bold mt-12 mb-8">
                   Recommended Tasks
                 </h1>
                 <div className="grid grid-cols-3 gap-5">
-                  {taskList.slice(0, 3).map((list) => (
-                    <TaskCard
-                      props={list}
-                      key={list.id}
-                      isExplorePage={isExplorePage}
-                      userRole={userRole}
-                    />
-                  ))}
+                {[...taskList]
+                  .sort(() => Math.random() - 0.5) // shuffle the list
+                  .slice(0, 3) // take first 3
+                  .map((list) => (
+                  <TaskCard key={list.id} 
+                  props={list} 
+                  isExplorePage={isExplorePage}
+                  userRole={userRole} />
+                ))}
                 </div>
               </>
             )}
