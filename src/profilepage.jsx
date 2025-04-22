@@ -7,8 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
-  const [qualification, setQualification] = useState("");
-  const [bio, setBio] = useState("");
+  const [location, setQualification] = useState("");
+  const [phone, setBio] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,8 +24,8 @@ const ProfilePage = () => {
         .get(`http://localhost:3000/get-profile/${userId}`)
         .then((response) => {
           setUser(response.data);
-          setQualification(response.data.qualification || "");
-          setBio(response.data.bio || "");
+          setQualification(response.data.location || "");
+          setBio(response.data.phone || "");
           setLoading(false);
         })
         .catch((err) => {
@@ -37,10 +37,10 @@ const ProfilePage = () => {
 
   const handleUpdate = () => {
     axios
-      .post("http://localhost:3000/update-profile", {
+      .put("http://localhost:3000/update-profile", {
         userId,
-        qualification,
-        bio,
+        location,
+        phone,
       })
       .then(() => {
         toast.success("Profile updated successfully!");
@@ -54,8 +54,8 @@ const ProfilePage = () => {
 
   const handleCancel = () => {
     if (user) {
-      setQualification(user.qualification || "");
-      setBio(user.bio || "");
+      setQualification(user.location || "");
+      setBio(user.phone || "");
     }
     setEditMode(false);
   };
@@ -73,7 +73,7 @@ const ProfilePage = () => {
               <img
                 src={`http://localhost:3000${user.profile_image}`}
                 alt="Profile"
-                className="w-40 h-40 rounded-full object-cover border-4 border-indigo-500"
+                className="w-40 h-40 rounded-full object-cover border-4 border-primary"
               />
               <div className="text-2xl font-semibold text-gray-800 mt-4">
                 {user.username}
@@ -85,35 +85,35 @@ const ProfilePage = () => {
 
             <div className="mt-6">
               <label className="text-2xl font-medium text-gray-600">
-                Qualification
+                Location
               </label>
               {editMode ? (
                 <input
                   type="text"
                   className="w-full p-3 border-2 border-gray-300 rounded-lg mt-2 text-xl"
-                  placeholder="Enter your qualification"
-                  value={qualification}
+                  placeholder="Enter your location"
+                  value={location}
                   onChange={(e) => setQualification(e.target.value)}
                 />
               ) : (
                 <p className="text-xl text-gray-700 mt-2">
-                  {qualification || "Not provided"}
+                  {location || "Not provided"}
                 </p>
               )}
             </div>
 
             <div className="mt-6">
-              <label className="text-2xl font-medium text-gray-600">Bio</label>
+              <label className="text-2xl font-medium text-gray-600">Phone</label>
               {editMode ? (
                 <textarea
                   className="w-full p-3 border-2 border-gray-300 rounded-lg mt-2 text-xl"
                   placeholder="Write something about yourself"
-                  value={bio}
+                  value={phone}
                   onChange={(e) => setBio(e.target.value)}
                 ></textarea>
               ) : (
                 <p className="text-xl text-gray-700 mt-2 whitespace-pre-line">
-                  {bio || "Not provided"}
+                  {phone || "Not provided"}
                 </p>
               )}
             </div>
@@ -121,7 +121,7 @@ const ProfilePage = () => {
             <div className="mt-6 space-x-4">
               {!editMode ? (
                 <button
-                  className="bg-indigo-600 text-white px-6 py-3 rounded-full text-xl hover:bg-indigo-700"
+                  className="bg-primary text-white px-6 py-3 rounded-full text-xl hover:bg-black"
                   onClick={() => setEditMode(true)}
                 >
                   Edit Profile
@@ -129,7 +129,7 @@ const ProfilePage = () => {
               ) : (
                 <>
                   <button
-                    className="bg-green-600 text-white px-6 py-3 rounded-full text-xl hover:bg-green-700"
+                    className="bg-green text-white px-6 py-3 rounded-full text-xl hover:bg-black"
                     onClick={handleUpdate}
                   >
                     Update Profile

@@ -57,11 +57,11 @@ const ClientCard = ({ props }) => {
 
       if (response.status === 200) {
         setIsRequestSent(true);
-        toast.success("Friend request sent successfully! 🎉");
+        toast.success("Followed successfully! 🎉");
       }
     } catch (error) {
-      console.error("Error sending friend request:", error);
-      toast.error("Request already sent. Please wait");
+      console.error("Error following:", error);
+      toast.error("Follow Request already sent. Please wait");
     }
   };
   const toggleReviews = async () => {
@@ -119,7 +119,7 @@ const ClientCard = ({ props }) => {
       <div className="flex justify-between items-center">
         <div className="mt-3 text-left">
           <h2 className="text-lg font-semibold text-gray-900">
-            @{props.username}
+            {props.username}
           </h2>
           <p className="text-sm text-gray-500">{props.role}</p>
           <p className="text-sm text-gray-400">{props.email}</p>

@@ -140,7 +140,7 @@ const AdminHomepage = () => {
         <section className="mb-8">
           <div className="flex justify-between items-center mb-4">
             <div className="grid grid-cols-3 gap-6 w-screen">
-              <div className="bg-secondary flex flex-col items-center p-6 rounded-lg shadow-md">
+              <div className="bg-secondary flex flex-col items-center p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-xl">
                 <span className="text-5xl">📋</span>
                 <h2 className="text-xl font-semibold mt-4">Task Posters</h2>
                 <p className="text-gray-600 mt-2">
@@ -148,13 +148,13 @@ const AdminHomepage = () => {
                 </p>
               </div>
 
-              <div className="bg-secondary flex flex-col items-center p-6 rounded-lg shadow-md">
+              <div className="bg-secondary flex flex-col items-center p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-xl">
                 <span className="text-5xl">📝</span>
                 <h2 className="text-xl font-semibold mt-4">Tasks</h2>
                 <p className="text-gray-600 mt-2">{tasks.length}</p>
               </div>
 
-              <div className="bg-secondary flex flex-col items-center p-6 rounded-lg shadow-md">
+              <div className="bg-secondary flex flex-col items-center p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-xl">
                 <span className="text-5xl">👨‍💻</span>
                 <h2 className="text-xl font-semibold mt-4">Taskers</h2>
                 <p className="text-gray-600 mt-2">

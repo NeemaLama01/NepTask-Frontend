@@ -48,8 +48,8 @@ const Auth = () => {
           Verify your email
         </h2>
         <p className="mt-6 text-center font-thin text-gray-900">
-          To keep a trusted and safe community, we’ve sent an email from{" "}
-          <span className="font-bold">neptask@gmail.com</span> for verification. You’ll only do this once.
+        Hey there! To keep your account secure please enter your verification token below{" "}
+        <span> and get started with <span className="font-bold">NepTask</span>.</span>
         </p>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <label className="font-bold">Verification Code</label>
@@ -66,7 +66,7 @@ const Auth = () => {
           />
           <button
             type="submit"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-gray focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Verify and continue
           </button>

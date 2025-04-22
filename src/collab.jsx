@@ -29,7 +29,7 @@ const Collab = () => {
         "Content-Type": "multipart/form-data",
       },});
       
-      toast.success("Project activated successfully!");
+      toast.success("Project will soon be activated!");
       navigate("/my-tasks");
     } catch (error) {
       toast.error("Error activating project. Please try again.");
@@ -47,7 +47,9 @@ const Collab = () => {
         userId,
         ...formData,
         status: 0,
-      });
+      },{ headers: {
+        "Content-Type": "multipart/form-data",
+      },});
       
       toast.success("Task archived successfully.");
       navigate("/home");
@@ -133,7 +135,7 @@ const Collab = () => {
           <button
             type="button"
             onClick={handleArchive}
-            className="inline-flex justify-center rounded-md bg-white py-2 px-4 text-sm font-medium text-primary border border-primary hover:bg-gray-700"
+            className="inline-flex justify-center rounded-md bg-white py-2 px-4 text-sm font-medium text-primary border border-primary hover:bg-primary hover:text-white"
             disabled={loading}
           >
             {loading ? "Archiving..." : "Archive"}

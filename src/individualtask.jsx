@@ -9,6 +9,8 @@ import TaskCard from "./taskcard";
 import BiddingFormOverlay from "./biddingform";
 import Sidebar from "./assets/sidebar";
 import Subheader from "./assets/subheader";
+import AdminSidebar from "./assets/adminsidebar"; 
+
 
 const IndividualTask = () => {
   const [taskInfo, setTaskInfo] = useState(null);
@@ -176,10 +178,11 @@ const IndividualTask = () => {
 
   return (
     <div className="flex h-screen w-screen bg-gray-50">
-      <Sidebar />
+      {userRole === "admin" ? <AdminSidebar /> : <Sidebar />}
+
       <div className="flex-1 pt-6 overflow-y-auto">
         <div className="flex justify-between shadow-md">
-          <h1 className="text-2xl font-bold text-black mb-10 px-6">
+          <h1 className="text-3xl font-semibold text-black mb-10 px-6">
             Task Detail
           </h1>
           <Subheader />
@@ -205,7 +208,7 @@ const IndividualTask = () => {
 
               {/* Right: Task Details */}
               <div className="w-1/2">
-                <h2 className="text-xl font-semibold mb-4">
+                <h2 className="text-xl font-semibold mb-4 text-primary">
                   {taskInfo?.taskTitle || "Loading..."}
                 </h2>
                 <p className="mb-3">
@@ -245,7 +248,7 @@ const IndividualTask = () => {
             {userRole === "Tasker" && (
               <>
                 <h1 className="text-4xl font-bold mt-12 mb-8">
-                  Recommended Tasks
+                  More Tasks
                 </h1>
                 <div className="grid grid-cols-3 gap-5">
                 {[...taskList]

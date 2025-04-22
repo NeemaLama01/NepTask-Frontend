@@ -86,7 +86,7 @@ const TaskCard = ({ props }) => {
   };
 
   return (
-    <div className="mx-auto w-full bg-white shadow-md rounded-lg overflow-hidden hover:rounded-xl hover:shadow-slate-300 transition-all">
+    <div className="mx-auto w-full bg-white shadow-md rounded-lg overflow-hidden hover:rounded-xl transition-transform duration-300 hover:scale-105 hover:shadow-xl">
       <div className="px-4 py-6">
                 {/* Task Image */}
                 {props.image ? (

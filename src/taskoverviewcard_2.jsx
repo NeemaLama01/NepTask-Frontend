@@ -76,7 +76,8 @@ const TaskoverviewCard2 = ({ props }) => {
                     Edit
                   </button>
                 )}
-
+              
+                
                 {/* Show Review and Rating popup if completionPercent is 100% */}
                 {completionPercent === 100 || props.completion === 100 && !showReviewPopup && (
                   <button

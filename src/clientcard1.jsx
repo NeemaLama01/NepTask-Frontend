@@ -19,7 +19,7 @@ const ClientCard1 = ({props}) => {
         className="w-16 h-16 rounded-full object-cover mb-2"
       />
       <div className="flex flex-col mt-2 mx-4">
-        <h3 className="font-medium text-gray-800">@{props.username}</h3>
+        <h3 className="font-medium text-gray-800">{props.username}</h3>
         <h3 className="font-medium text-gray-400">{props.role}</h3>
       </div>
     </div>

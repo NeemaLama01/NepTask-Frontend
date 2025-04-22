@@ -85,12 +85,12 @@ const Header = () => {
       <div className="flex items-center space-x-6">
         {/* New Task Button */}
         {userRole === "Task Poster" && (
-          <button onClick={handleTaskClick} className="bg-indigo-600 text-white px-4 py-2 rounded">
+          <button onClick={handleTaskClick} className="bg-primary text-white px-4 py-2 rounded">
             + New Task
           </button>
         )}
 
-        {/* Notification Icon */}
+        {/* Notification Icon 
         <button className="relative" onClick={toggleNotifications}>
           <BellIcon className="h-6 w-6 hover:text-gray-700" />
           {notifications.length > 0 && (
@@ -98,7 +98,7 @@ const Header = () => {
           )}
         </button>
 
-        {/* Notification Dropdown */}
+        {/* Notification Dropdown 
         {showNotifications && (
           <div ref={notificationRef} className="absolute top-12 right-16 bg-white shadow-lg rounded-lg w-64 p-4 z-50 border">
             <h3 className="text-sm font-semibold mb-2">Notifications</h3>
@@ -115,10 +115,10 @@ const Header = () => {
             )}
           </div>
         )}
-
+*/}
         {/* Profile Icon */}
         <div className="relative">
-          <div className="w-10 h-10 bg-gray-300 rounded-full overflow-hidden cursor-pointer" onClick={toggleProfileOptions}>
+          <div className="w-10 h-10 bg-gray-300 rounded-full overflow-hidden cursor-pointer border border-400" onClick={toggleProfileOptions}>
             <img src={profileImage || "/default-avatar.png"} alt="Profile" className="w-full h-full object-cover" />
           </div>
 
@@ -139,7 +139,7 @@ const Header = () => {
               
               {userRole !== "admin" && (
                 <button onClick={handleUpdateRedirect} className="w-full text-left text-sm text-gray-700 p-2 hover:bg-gray-100 rounded">
-                  Update Profile
+                  View Profile
                 </button>
               )}
             </div>

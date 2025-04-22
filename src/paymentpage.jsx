@@ -128,7 +128,7 @@ console.log(payment)
       <div className="flex-1 p-6 overflow-y-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-primary">Payments</h1>
+            <h1 className="text-3xl font-semibold">Payments</h1>
           
           </div>
           <Subheader />
@@ -143,7 +143,7 @@ console.log(payment)
           ) : payments.length > 0 ? (
             <div className="overflow-hidden">
               
-                <h2 className="text-xl font-semibold text-gray-800">Your Payment History</h2>
+                <h2 className="text-xl font-semibold text-gray-800 mb-4">Your Payment History</h2>
               
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
@@ -197,7 +197,7 @@ console.log(payment)
                               className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1 active:translate-y-0 duration-150"
                               onClick={() => handlePayNow(payment)}
                             >
-                              Pay Now
+                              Release Now
                             </button>
                           ) : (
                             <span className="text-green-600 flex items-center">

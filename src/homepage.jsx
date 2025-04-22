@@ -57,7 +57,7 @@ const Homepage = () => {
 
         <section className="mb-8">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-black">Your Tasks</h2>
+            <h2 className="text-2xl font-semibold text-black">Your Tasks</h2>
             {filteredTasks.length > 2 && (
               <button
                 onClick={() => setShowAllTasks(!showAllTasks)}
@@ -78,7 +78,7 @@ const Homepage = () => {
         {/* Pals Section */}
         <section>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-3xl font-bold text-gray-800">Your Pals</h2>
+              <h2 className="text-2xl font-semibold text-gray-800">Your Connections</h2>
               {PalList.length > 2 && (
                 <button
                   onClick={() => setShowAllPals(!showAllPals)}

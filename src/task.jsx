@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import styles
 
-const task = () => {
+const Task = () => {
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [selectedOptions1, setSelectedOptions1] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
@@ -63,7 +63,7 @@ const task = () => {
             return;
         }
 
-        toast.success("Task created successfully! 🎉", { position: "top-right" });
+        toast.success("First step to create task done.🎉", { position: "top-right" });
 
         navigate("/collab-task", {
             state: { taskTitle, taskInfo, taskType, priceRange,image, requirement },
@@ -79,7 +79,7 @@ const task = () => {
     {/* List Item with Multiple Lines */}
     <li className="mb-10 text-xl font-light text-gray-700 transition duration-300 cursor-pointer p-4 rounded">
       <div className="space-y-10">
-        <p className="text-indigo-600 bg-gray-200 p-2 rounded ">1. Details</p>
+        <p className="text-primary bg-gray-200 p-2 rounded ">1. Details</p>
         <p className=" p-2">2. Collaboration Terms</p>
       </div>
     </li>
@@ -98,7 +98,7 @@ const task = () => {
             type="text"
             id="task-title"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
             placeholder="e.g. AI-based video recruitment and assessment tool"
             value={taskTitle}
             onChange={(e)=> settaskTitle(e.target.value)} 
@@ -112,7 +112,7 @@ const task = () => {
           <textarea
             id="project-description"
             rows={3}
-            className="mt-1 block w-full  rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full  rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
             placeholder="e.g., Improving recruitment efficiency with advanced tools for modern hiring challenges."
             required
             value={taskInfo}
@@ -133,7 +133,7 @@ const task = () => {
   <button
     type="button"
     onClick={() => setIsOpen(!isOpen)}
-    className="mt-1 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 text-left"
+    className="mt-1 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm p-2 text-left"
   >
     {selectedOptions.length > 0 ? selectedOptions.join(", ") : "Select options"}
   </button>
@@ -168,7 +168,7 @@ const task = () => {
   <button
     type="button"
     onClick={() => setIsOpen1(!isOpen1)}
-    className="mt-1 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 text-left"
+    className="mt-1 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm p-2 text-left"
   >
     {selectedOptions1.length > 0 ? selectedOptions1.join(", ") : "Select range"}
   </button>
@@ -202,7 +202,7 @@ const task = () => {
   id="related-images"
   accept="image/*"
   onChange={handleImageChange}
-    className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100"
+    className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-[#000000]"
   />
   
 </div>
@@ -212,7 +212,7 @@ const task = () => {
 </label>
 <select
       id="required-expertise"
-      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
       required
       value={requirement} // Important: Controlled component
       onChange={(e) => setRequirement(e.target.value)}
@@ -227,14 +227,14 @@ const task = () => {
         <div className="flex justify-between mt-10">
         <button
             type="button"
-            className="inline-flex justify-center rounded-md border border-transparent bg-white-600 py-2 px-4 text-sm font-medium text-black shadow-sm hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="inline-flex justify-center rounded-md border border-transparent bg-white-600 py-2 px-4 text-sm font-medium text-black shadow-sm hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleNext}
-            className="inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="inline-flex justify-center rounded-md border border-transparent bg-primary py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             Next
           </button>
@@ -248,4 +248,4 @@ const task = () => {
 };
 
 
-export default task;
+export default Task;

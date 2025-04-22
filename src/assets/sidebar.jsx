@@ -21,7 +21,7 @@ const Sidebar = () => {
     { name: "My Tasks", icon: <ClipboardListIcon className="h-5 w-5 mr-2" />, path: "/my-tasks" },
     { name: "Payments", icon: <CashIcon className="h-5 w-5 mr-2" />, path: "/paymentpage" },
     { name: "Messages", icon: <ChatIcon className="h-5 w-5 mr-2" />, path: "/chat" },
-    { name: "Taskers", icon: <UserGroupIcon className="h-5 w-5 mr-2" />, path: "/client" },
+    { name: "Users", icon: <UserGroupIcon className="h-5 w-5 mr-2" />, path: "/client" },
    
   ];
 

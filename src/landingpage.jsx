@@ -237,9 +237,9 @@ const LandingPage = () => {
             </div>
             <div className="order-1 md:order-2 flex justify-center">
               <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                alt="People working together"
-                className="rounded-2xl shadow-2xl w-full max-w-md object-cover h-80 md:h-96"
+                src="/hdl390vh.png"
+                alt="Boss Lady"
+                className="rounded-2xl shadow-2xl w-full max-w-md object-cover object-top h-90 md:h-96"
               />
             </div>
           </div>

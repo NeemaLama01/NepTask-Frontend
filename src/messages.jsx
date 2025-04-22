@@ -60,7 +60,7 @@ const Messages = () => {
       <div className="flex-1 flex flex-col">
         <div className="flex justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-primary p-6">Messages</h1>
+            <h1 className="text-3xl font-semibold p-6">Messages</h1>
           </div>
           <div className="p-4 bg-gray-50">
             <Subheader />
@@ -73,7 +73,7 @@ const Messages = () => {
           {/* Chat List */}
           <div className="w-1/3 bg-white p-4 border-r overflow-y-auto">
             <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              Messages
+              Chats
             </h2>
             {chatList.map((chat) => (
               <Message_card
