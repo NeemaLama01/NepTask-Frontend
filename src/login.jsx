@@ -115,7 +115,7 @@ const Login = () => {
       {/* Right Section: Image and Overlay */}
       <div className="w-1/2 relative">
         <img
-          src="/image-9.png"
+          src="/group.jpg"
           alt="Teamwork"
           className="w-full h-full object-cover"
         />

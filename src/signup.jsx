@@ -16,18 +16,6 @@ const Signup = () => {
   const handleFullNameChange = (e) => setFullName(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleOptionChange = (e) => setSelectedOption(e.target.value);
-  const handleTokenChange = (e) => setToken(e.target.value);
-
-  const handleSendToken = async () => {
-    try {
-      await axios.post("http://localhost:3000/verify", { email });
-      setMessage("Token sent to your email.");
-      setError("");
-    } catch (err) {
-      setError(err.response?.data || "Error sending token");
-      setMessage("");
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,16 +43,16 @@ const Signup = () => {
           Lorem ipsum dolor sit amet consectetur. Integer sed diam eget amet orci nulla ultricies.
         </p>
 
-        {/* Google Signup Button */}
+        {/* Google Signup Button 
         <button className="w-full flex items-center justify-center border border-gray-300 rounded py-2 mb-6 hover:bg-gray-50">
           <img src="/google.png" alt="Google Icon" className="h-5 w-5 mr-2" />
           <span className="text-gray-700 font-medium">Signup with Google</span>
         </button>
-
+        
         <div className="text-center text-gray-400 mb-6">
           <span>or continue with email</span>
         </div>
-
+*/}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && <div className="text-red-500 text-sm text-center">{error}</div>}
           {message && <div className="text-green-500 text-sm text-center">{message}</div>}
@@ -82,13 +70,7 @@ const Signup = () => {
               value={email}
               onChange={handleEmailChange}
             />
-            <button
-              type="button"
-              onClick={handleSendToken}
-              className="text-sm text-blue-500 hover:underline mt-1"
-            >
-              Send token to email
-            </button>
+            
           </div>
 
           {/* Full Name */}
@@ -135,18 +117,6 @@ const Signup = () => {
             <p className="text-sm text-gray-500 mt-1">Must be at least 8 characters.</p>
           </div>
 
-          {/* Token */}
-          <div className="mb-4">
-            <label className="text-gray-700 font-medium block mb-1">Token</label>
-            <input
-              type="text"
-              required
-              placeholder="Enter your token"
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              value={token}
-              onChange={handleTokenChange}
-            />
-          </div>
 
           {/* Submit Button */}
           <button className="w-full bg-primary text-white py-2 rounded font-medium hover:bg-gray-800">

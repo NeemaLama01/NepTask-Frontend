@@ -39,9 +39,9 @@ const Rejectedtasks = () => {
 
       setRejectedList(response?.data || []);
     } catch (error) {
+      toast.error("No Rejected Tasks found.");
       console.error("Error fetching accepted tasks:", error);
       setRejectedList([]);
-      toast.error("Failed to load accepted tasks. Please try again.");
     }
   };
 
@@ -120,6 +120,7 @@ const Rejectedtasks = () => {
               .filter((list) => list.acceptedStatus == 0)
               .map((list) => (
                 <TaskOverviewCard props={list} key={list.id} />
+                
               ))}
           </div>
         </section>
